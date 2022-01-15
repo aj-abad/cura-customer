@@ -7,13 +7,6 @@
         Create a Cura account.
       </h3>
       <form id="signup-form" @submit.prevent="signUp()" class="mt-6">
-        <v-alert
-          class="rounded-lg error lighten-2 white--text mb-4"
-          dismissible
-          transition="fade"
-        >
-          This email address is already in use.
-        </v-alert>
         <v-text-field
           v-model.trim="email"
           outlined
