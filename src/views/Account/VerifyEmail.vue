@@ -65,10 +65,6 @@ export default {
     PinInput,
     VerifyEmailIllustration,
   },
-  mounted() {
-    console.log("x");
-    // if (!this.timerStarted) this.$store.commit('startTimer', { time: 300 })
-  },
   computed: {
     email() {
       return this.$route.query.email;
