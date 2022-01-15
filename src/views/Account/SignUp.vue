@@ -94,7 +94,6 @@ export default {
   },
   computed: {
     passwordTest() {
-      const x = 0;
       return owasp.test(this.password);
     },
     passwordStrength() {
