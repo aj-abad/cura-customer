@@ -131,10 +131,9 @@ export default {
 
       this.$http
         .post("/auth/signup", { email, password })
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           this.isDone = true;
-          this.$router.push("/account/verifyemail");
+          this.$router.push(`/account/verifyemail?email=${email}`);
         })
         .catch((err) =>
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage)
