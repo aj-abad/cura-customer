@@ -21,7 +21,7 @@ const routes = [
   {
     path: '/account/verifyemail',
     name: 'VerifyEmail',
-    copmponent: VerifyEmail,
+    component: VerifyEmail,
     meta: {
       depth: 3
     }

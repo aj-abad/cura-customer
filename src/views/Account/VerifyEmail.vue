@@ -1,40 +1,19 @@
 <template>
   <div>
-    <v-app-bar
-      class="rounded-lg"
-      color="transparent"
-      elevation="0"
-    >
-      <v-btn
-        @click="$router.go(-1)"
-        icon
-        v-ripple="{ class: 'primary--text' }"
-      >
-        <v-icon color="primary">
-          mdi-arrow-left
-        </v-icon>
-      </v-btn>
-    </v-app-bar>
+    <back-nav />
     <div class="px-6 pt-2">
       <div class="px-10 mb-6">
         <verify-email-illustration />
       </div>
-      <h2 class="text-center">
-        Verify your email
-      </h2>
+      <h2 class="text-center">Verify your email</h2>
       <h3 class="text-center mb-8 grey--text font-weight-medium">
         Enter the code we sent to
-        <span class="font-weight-semibold">{{ maskedEmail }}</span>.
+        <span class="font-weight-semibold">{{ email }}</span
+        >.
       </h3>
-      <form
-        class="w-100"
-        @submit.prevent="submitCode()"
-      >
+      <form class="w-100" @submit.prevent="submitCode()">
         <div class="pin-container w-100">
-          <pin-input
-            :digits="5"
-            @input="pinChangeHandler"
-          />
+          <pin-input :digits="5" @input="pinChangeHandler" />
           <v-btn
             :disabled="!pin || pin.length < 5"
             type="submit"
@@ -78,84 +57,71 @@
 </template>
 
 <script>
-import PinInput from '@/components/Account/PinInput'
-import VerifyEmailIllustration from '@/components/SVG/VerifyEmailIllustration'
+import PinInput from "@/components/Account/PinInput";
+import VerifyEmailIllustration from "@/components/SVG/VerifyEmailIllustration";
 export default {
-  name: 'VerifyEmail',
+  name: "VerifyEmail",
   components: {
     PinInput,
-    VerifyEmailIllustration
+    VerifyEmailIllustration,
   },
-  mounted () {
-    if (!this.timerStarted) this.$store.commit('startTimer', { time: 300 })
+  mounted() {
+    console.log("x");
+    // if (!this.timerStarted) this.$store.commit('startTimer', { time: 300 })
   },
   computed: {
-    email () {
-      return this.$route.query.email
+    email() {
+      return this.$route.query.email;
     },
-    maskedEmail () {
-      const email = this.email.split('@')
-
-      email[0] =
-        email[0][0].toString().padEnd(email[0].length - 2, '•') +
-        email[0][email[0].length - 1]
-      return email.join().replace(',', '@')
-    },
-    timerStarted () {
-      return this.$store.getters.getTimer.timerStarted
-    },
-    time () {
-      return this.$store.getters.getTimer.time
-    }
   },
-  data () {
+  data() {
     return {
       pin: null,
       isLoading: false,
-      isResendLoading: false
-    }
+      isResendLoading: false,
+    };
   },
   methods: {
-    resendEmail () {
-      if (this.isResendLoading || this.timerStarted) return null
-      this.isResendLoading = true
+    resendEmail() {
+      if (this.isResendLoading || this.timerStarted) return null;
+      this.isResendLoading = true;
       this.$http
-        .post('/auth/resendverificationmail', `"${this.email}"`)
-        .then(() => this.$store.commit('startTimer', { time: 300 }))
+        .post("/auth/resendverificationmail", `"${this.email}"`)
+        .then(() => this.$store.commit("startTimer", { time: 300 }))
         .catch((err) => {
-          this.$emit('snackbarmessage', err?.response?.data?.errorMessage)
+          this.$emit("snackbarmessage", err?.response?.data?.errorMessage);
         })
-        .finally(() => (this.isResendLoading = false))
+        .finally(() => (this.isResendLoading = false));
     },
-    pinChangeHandler (pin) {
-      this.pin = pin
+    pinChangeHandler(pin) {
+      this.pin = pin;
     },
-    submitCode () {
-      if (this.isLoading) return null
-      this.isLoading = true
+    submitCode() {
+      if (this.isLoading) return null;
+      this.isLoading = true;
 
       this.$http
-        .post('auth/verifyemail', {
+        .post("auth/verifyemail", {
           code: this.pin,
-          email: this.email
+          email: this.email,
         })
         .then((res) => {
-          const { token, userId } = res.data
-          this.$store.commit('stopTimer')
-          this.$store.commit('setAccount', {
+          const { token, userId } = res.data;
+          this.$store.commit("stopTimer");
+          this.$store.commit("setAccount", {
             token,
             userId,
             userStatus: 2,
-            userType: 1
-          })
+            userType: 1,
+          });
         })
         .catch((err) => {
-          this.$emit('snackbarmessage', err?.response?.data?.errorMessage)
+          this.$emit("snackbarmessage", err?.response?.data?.errorMessage);
         })
-        .finally(() => (this.isLoading = false))
-    }
-  }
-}
+        .finally(() => (this.isLoading = false));
+    },
+  },
+};
 </script>
 
 <style lang="stylus"></style>
