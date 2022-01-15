@@ -5,70 +5,70 @@
       v-for="(i, j) in digits"
       :key="j"
       :class="{
-        'pr-1': j === 0,
-        'px-1': j > 0 && 0 < digits - 1,
-        'pl-1': j === 0,
+        'pr-1': i === 1,
+        'px-1': i > 1 && i < digits,
+        'pl-1': i === digits,
       }"
     >
       <input
         ref="pinInput"
-        :aria-label="`PIN input digit ${i}`"
+        :aria-label="`PIN digit ${i}`"
         type="number"
         class="pin-input"
         pattern="[0-9]{1}"
         @keydown="keydownHandler($event, j)"
         @input="inputHandler($event, j)"
-      >
+      />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'PinInput',
+  name: "PinInput",
   props: {
-    digits: Number
+    digits: Number,
   },
-  data () {
+  data() {
     return {
-      pin: ''
-    }
+      pin: "",
+    };
   },
   methods: {
-    keydownHandler (e, i) {
-      if (e.keyCode !== 8) return null
-      e.preventDefault()
-      const el = this.$refs.pinInput[i]
-      const prev = this.$refs.pinInput[i - 1]
-      parseInt(el.value) >= 0 ? (el.value = null) : prev?.focus()
-      return this.computePin()
+    keydownHandler(e, i) {
+      if (e.keyCode !== 8) return null;
+      e.preventDefault();
+      const el = this.$refs.pinInput[i];
+      const prev = this.$refs.pinInput[i - 1];
+      parseInt(el.value) >= 0 ? (el.value = null) : prev?.focus();
+      return this.computePin();
     },
-    inputHandler (e, i) {
-      const el = this.$refs.pinInput[i]
-      const next = this.$refs.pinInput[i + 1]
-      const inputVal = parseInt(e.data)
+    inputHandler(e, i) {
+      const el = this.$refs.pinInput[i];
+      const next = this.$refs.pinInput[i + 1];
+      const inputVal = parseInt(e.data);
 
       if (isNaN(inputVal)) {
-        el.value = null
-        return e.preventDefault()
+        el.value = null;
+        return e.preventDefault();
       }
 
       if (el.value >= 0) {
-        el.value = inputVal
-        this.computePin()
-        return next ? next.focus() : document.activeElement.blur()
+        el.value = inputVal;
+        this.computePin();
+        return next ? next.focus() : document.activeElement.blur();
       }
     },
-    computePin () {
-      let pin = ''
+    computePin() {
+      let pin = "";
       this.$refs.pinInput.forEach((el) => {
-        pin += el.value.toString()
-      })
-      this.pin = pin
-      this.$emit('input', this.pin)
-    }
-  }
-}
+        pin += el.value.toString();
+      });
+      this.pin = pin;
+      this.$emit("input", this.pin);
+    },
+  },
+};
 </script>
 
 <style lang="stylus" scoped>

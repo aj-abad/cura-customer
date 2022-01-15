@@ -69,6 +69,9 @@ export default {
     email() {
       return this.$route.query.email;
     },
+    timerStarted() {
+      return false;
+    },
   },
   data() {
     return {
