@@ -19,7 +19,7 @@
           filled
         />
         <v-text-field
-          v-model.trim="password"
+          v-model="password"
           :type="showPassword ? 'text' : 'password'"
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="showPassword = !showPassword"

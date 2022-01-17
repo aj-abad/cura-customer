@@ -100,19 +100,13 @@ export default {
       this.isLoading = true;
 
       this.$http
-        .post("auth/verifyemail", {
+        .post("auth/verify", {
           code: this.pin,
           email: this.email,
         })
         .then((res) => {
-          const { token, userId } = res.data;
-          this.$store.commit("stopTimer");
-          this.$store.commit("setAccount", {
-            token,
-            userId,
-            userStatus: 2,
-            userType: 1,
-          });
+          res;
+          //TODO successful sign up
         })
         .catch((err) => {
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage);
