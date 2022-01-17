@@ -6,11 +6,7 @@
       <h3 class="font-weight-medium grey--text text--darken-2">
         We'll check if you have an account.
       </h3>
-      <form
-        id="email-form"
-        @submit.prevent="submitEmail()"
-        class="mt-6"
-      >
+      <form id="email-form" @submit.prevent="submitEmail()" class="mt-6">
         <v-text-field
           v-model.trim="email"
           outlined
@@ -45,47 +41,46 @@
 </template>
 
 <script>
-const validator = require('email-validator')
+const validator = require("email-validator");
 export default {
-  name: 'Email',
-  data () {
+  name: "Email",
+  data() {
     return {
-      email: sessionStorage.getItem('email') ?? '',
+      email: sessionStorage.getItem("email") ?? "",
       isLoading: false,
-      isDone: false
-    }
+      isDone: false,
+    };
   },
   computed: {
-    isValidEmail () {
-      return validator.validate(this.email)
-    }
+    isValidEmail() {
+      return validator.validate(this.email);
+    },
   },
-  mounted () {
-    setTimeout(() => document.querySelector('#email-form input')?.focus(), 320)
+  mounted() {
+    setTimeout(() => document.querySelector("#email-form input")?.focus(), 320);
   },
   methods: {
-    submitEmail () {
-      if (this.isLoading || this.isDone) return null
-      this.isLoading = true
+    submitEmail() {
+      if (this.isLoading || this.isDone) return null;
+      this.isLoading = true;
       // this.$emit("showloading", true, "Checking...");
-      const email = this.email?.trim()?.toLowerCase()
+      const email = this.email?.trim()?.toLowerCase();
       this.$http
-        .post('/auth/checkemail', { email })
+        .post("/auth/checkemail", { email, userType: 1 })
         .then((res) => {
-          sessionStorage.setItem('email', email)
-          const route = res.emailExists ? 'signin' : 'signup'
-          this.$emit('showloading', false, 'Checking...')
-          this.$router.push(`/account/${route}?email=${email}`)
+          sessionStorage.setItem("email", email);
+          const route = res.emailExists ? "signin" : "signup";
+          this.$emit("showloading", false, "Checking...");
+          this.$router.push(`/account/${route}?email=${email}`);
         })
         .catch((err) => {
-          console.log(err?.response?.data?.errorMessage)
-          this.$emit('snackbarmessage', err?.response?.data?.errorMessage)
+          this.$emit("snackbarmessage", err?.response?.data?.errorMessage);
         })
         .finally(() => {
-          this.isLoading = false
+          this.isLoading = false;
           // this.$emit("showloading", false, null);
-        })
-    }
-  }
-}
+        });
+    },
+  },
+};
 </script>
