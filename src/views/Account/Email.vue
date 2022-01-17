@@ -69,7 +69,7 @@ export default {
         .post("/auth/checkemail", { email, userType: 1 })
         .then((res) => {
           sessionStorage.setItem("email", email);
-          const route = res.emailExists ? "signin" : "signup";
+          const route = res.data?.emailExists ? "signin" : "signup";
           this.$emit("showloading", false, "Checking...");
           this.$router.push(`/account/${route}?email=${email}`);
         })
