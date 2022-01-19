@@ -1,6 +1,41 @@
 <template>
   <div>
-    <back-nav />
+    <v-dialog v-model="dialog">
+      <v-sheet class="rounded-lg text-center pa-4">
+        <h3 class="mb-2">Cancel sign up</h3>
+        <p class="mb-4">Do you wish to cancel account creation?</p>
+        <v-btn
+          rounded
+          elevation="0"
+          @click="goBack()"
+          block
+          color="primary"
+          class="py-6 mb-2"
+        >
+          Yes, go back
+        </v-btn>
+        <v-btn
+          @click="dialog = false"
+          block
+          plain
+          rounded
+          elevation="0"
+          class="py-6"
+        >
+          No, continue
+        </v-btn>
+      </v-sheet>
+    </v-dialog>
+    <v-app-bar class="mb-4" color="transparent" elevation="0">
+      <v-btn
+        @click="dialog = true"
+        icon
+        v-ripple="{ class: 'primary--text' }"
+        aria-label="Go back"
+      >
+        <v-icon color="primary"> mdi-close </v-icon>
+      </v-btn>
+    </v-app-bar>
     <div class="px-6 pt-2">
       <div class="px-10 mb-6">
         <verify-email-illustration />
@@ -65,6 +100,15 @@ export default {
     PinInput,
     VerifyEmailIllustration,
   },
+  data() {
+    return {
+      dialog: false,
+      pin: null,
+      isLoading: false,
+      isLocked: true,
+      isResendLoading: false,
+    };
+  },
   computed: {
     email() {
       return this.$route.query.email;
@@ -73,14 +117,16 @@ export default {
       return false;
     },
   },
-  data() {
-    return {
-      pin: null,
-      isLoading: false,
-      isResendLoading: false,
-    };
-  },
   methods: {
+    goBack() {
+      if (!this.isLocked) return null;
+      this.dialog = false;
+      setTimeout(() => {
+        this.$emit("locknavigation", false);
+        this.isLocked = false;
+        this.$router.replace("/account/email");
+      }, 300);
+    },
     resendEmail() {
       if (this.isResendLoading || this.timerStarted) return null;
       this.isResendLoading = true;
@@ -112,6 +158,14 @@ export default {
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage);
         })
         .finally(() => (this.isLoading = false));
+    },
+  },
+  mounted() {
+    this.$emit("locknavigation", true);
+  },
+  watch: {
+    $route() {
+      if (this.isLocked) this.dialog = true;
     },
   },
 };
