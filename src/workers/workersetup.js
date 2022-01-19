@@ -1,6 +1,6 @@
 
-import TimerWorker from "worker-loader!./workers/timer";
+import TimerWorker from "worker-loader!./timer";
 if (window.Worker) {
-  window.worker = new TimerWorker();
-  window.worker.postMessage([1, 2, 3]);
+  window.timerWorker = new TimerWorker();
+  window.timerWorker.postMessage([1, 2, 3]);
 }

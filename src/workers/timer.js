@@ -1,12 +1,24 @@
 let timer = null;
+let timeRemaining = 0;
 
-onmessage = function (e) {
-  if (e.timerStarted)
+
+onmessage = function (shouldStart = false, time = 0) {
+  if (shouldStart) {
+    timeRemaining = time;
     timer = setInterval(() => {
-      x()
+      increment()
     }, 1000)
+  }
+  else {
+    timeRemaining = 0;
+    clearInterval(timer)
+  }
 }
 
-const x = () => {
-  postMessage(1)
+const increment = () => {
+  if (timeRemaining > 0) {
+    postMessage()
+    timeRemaining--
+  }
+  else clearInterval(timer)
 }
