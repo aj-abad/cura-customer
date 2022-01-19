@@ -15,7 +15,10 @@ import './assets/main.css'
 import './assets/overrides.css'
 import './assets/transitions.css'
 import './plugins/components'
+import './workers/workersetup'
 Vue.config.productionTip = false
+
+
 
 new Vue({
   vuetify,
