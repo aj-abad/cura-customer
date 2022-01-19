@@ -8,10 +8,7 @@
       max-width="75vw"
     >
       <v-sheet class="rounded-lg pa-6 d-flex">
-        <loader
-          style="width: 32px"
-          class="mr-6"
-        />
+        <loader style="width: 32px" class="mr-6" />
         <div
           id="progress-message"
           class="message font-weight-semibold d-flex align-center mt-1"
@@ -22,11 +19,17 @@
         </div>
       </v-sheet>
     </v-dialog>
+    <!-- <div id="is-offline" class="py-1 text-center grey darken-3">
+      <small class="font-weight-semibold white--text">
+        You are currently offline.
+      </small>
+    </div> -->
     <transition :name="transition">
       <keep-alive :include="cachedComponents">
         <router-view
           @snackbarmessage="showSnackbar"
           @showloading="showLoadingDialog"
+          @locknavigation="lockNavigationHandler"
           class="page"
           id="view"
         />
@@ -45,64 +48,67 @@
 </template>
 
 <script>
-import Loader from '@/components/SVG/Loader'
+import Loader from "@/components/SVG/Loader";
 export default {
-  name: 'ViewContainer',
+  name: "ViewContainer",
   components: { Loader },
-  data () {
+  data() {
     return {
-      cachedComponents: ['Home', 'ShopDetails', 'ServiceDetails'],
-      transition: 'push',
+      cachedComponents: ["Home", "ShopDetails", "ServiceDetails"],
+      transition: "push",
       snackbar: false,
       loadingDialog: false,
-      loadingMessage: 'Loading...',
-      snackbarMessage: '',
-      lockNavigation: false
-    }
+      loadingMessage: "Loading...",
+      snackbarMessage: "",
+      lockNavigation: false,
+    };
   },
   computed: {
-    userStatus () {
-      return this.$store.getters.getAccount?.userStatus
-    }
+    userStatus() {
+      return this.$store.getters.getAccount?.userStatus;
+    },
   },
   methods: {
-    showSnackbar (message) {
-      this.snackbar = true
+    showSnackbar(message) {
+      this.snackbar = true;
       this.snackbarMessage =
         message ??
         (navigator.onLine
-          ? 'Oops, something went wrong on our part.'
-          : 'Cannot connect to Cura.')
+          ? "Oops, something went wrong on our part."
+          : "Cannot connect to Cura.");
     },
-    showLoadingDialog (status, message) {
-      this.lockNavigation = status
-      this.loadingDialog = status
-      if (message) this.loadingMessage = message
+    showLoadingDialog(status, message) {
+      this.lockNavigation = status;
+      this.loadingDialog = status;
+      if (message) this.loadingMessage = message;
       this.$nextTick(() =>
-        document.querySelector('#progress-message')?.focus()
-      )
-    }
+        document.querySelector("#progress-message")?.focus()
+      );
+    },
+    lockNavigationHandler(lock) {
+      this.lockNavigation = lock;
+    },
   },
   watch: {
-    userStatus () {
+    userStatus() {
       // Sign out handler
       if (this.userStatus === 0) {
-        this.$router.replace('/').catch((err) => err)
-        this.cachedComponents.pop()
+        this.$router.replace("/").catch((err) => err);
+        this.cachedComponents.pop();
         this.$nextTick(() => {
-          this.cachedComponents.push('Home')
-        })
+          this.cachedComponents.push("Home");
+        });
       }
 
       // Sign in handler
       if (this.userStatus === 1) {
         if (this.$store.getters.getAccount.firstTimeUser) {
-          this.$router.replace('/onboarding/welcome').catch((err) => err)
+          this.$router.replace("/onboarding/welcome").catch((err) => err);
         } else {
           if (this.$store.getters.getAddress.coords.latitude !== null) {
-            this.$router.replace('/home').catch((err) => err)
+            this.$router.replace("/home").catch((err) => err);
           } else {
-            this.$router.replace('/requestlocation').catch((err) => err)
+            this.$router.replace("/requestlocation").catch((err) => err);
           }
         }
       }
@@ -110,24 +116,24 @@ export default {
       // New sign up handler
       if (this.userStatus === 2) {
         this.$router
-          .replace('/finishregistration/basicinfo')
-          .catch((err) => err)
+          .replace("/finishregistration/basicinfo")
+          .catch((err) => err);
       }
     },
-    $route (to, from) {
+    $route(to, from) {
       // prevent route changes if enabled
       if (this.lockNavigation) {
-        this.$router.push(from).catch((err) => err)
-        this.lockNavigation = false
-        this.$nextTick(() => (this.lockNavigation = true))
-        return null
+        this.$router.push(from).catch((err) => err);
+        this.lockNavigation = false;
+        this.$nextTick(() => (this.lockNavigation = true));
+        return null;
       }
 
       // Default transition
-      this.transition = to.meta.depth > from.meta.depth ? 'push' : 'pop'
-    }
-  }
-}
+      this.transition = to.meta.depth > from.meta.depth ? "push" : "pop";
+    },
+  },
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -143,5 +149,13 @@ export default {
 
 .page {
   background: white;
+}
+
+#is-offline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
 }
 </style>
