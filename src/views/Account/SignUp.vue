@@ -126,7 +126,7 @@ export default {
         .post("/auth/signup", { email, password })
         .then(() => {
           this.isDone = true;
-          this.$router.push(`/account/verifyemail?email=${email}`);
+          this.$router.replace(`/account/verifyemail?email=${email}`);
         })
         .catch((err) =>
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage)
