@@ -18,6 +18,11 @@ const store = {
     updateUser: ({ getters, commit }, payload) => {
       commit('updateUser', payload);
       localStorage.setItem("user", JSON.stringify(getters.getUser));
+    },
+    signOut({ commit }) {
+      commit('signOut');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
     }
   },
   mutations: {
@@ -33,6 +38,17 @@ const store = {
       user.lastName = lastName ?? user.lastName;
       user.mobile = mobile ?? user.mobile;
       user.profilePhoto = profilePhoto ?? user.profilePhoto;
+    },
+    signOut: (state) => {
+      state.user = {
+        userId: null,
+        userStatus: null,
+        firstName: null,
+        lastName: null,
+        mobile: null,
+        profilePhoto: null,
+      };
+      state.token = null;
     }
   },
   getters: {
