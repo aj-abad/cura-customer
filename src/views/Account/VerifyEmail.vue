@@ -2,8 +2,8 @@
   <div>
     <v-dialog v-model="dialog">
       <v-sheet class="rounded-lg text-center pa-4">
-        <h3 class="mb-2">Cancel sign up</h3>
-        <p class="mb-4">Do you wish to cancel account creation?</p>
+        <h3 class="mb-2">Cancel account creation?</h3>
+        <p class="mb-4">Do you wish to cancel signing up?</p>
         <v-btn
           rounded
           elevation="0"
@@ -41,19 +41,20 @@
         <verify-email-illustration />
       </div>
       <h2 class="text-center">Verify your email</h2>
-      <h3 class="text-center mb-8 grey--text font-weight-medium">
-        Enter the code we sent to
-        <span class="font-weight-semibold">{{ email }}</span
-        >.
+
+      <h3 class="text-center mb-0 grey--text font-weight-medium text--darken-2">
+        Please enter the code we sent to
+      </h3>
+      <h3 class="grey--text text-truncate text-center mb-4 text--darken-2">
+        <span class="font-weight-semibold"> {{ email }} </span>
       </h3>
       <form class="w-100" @submit.prevent="submitCode()">
         <div class="pin-container w-100">
-          <pin-input :digits="5" @input="pinChangeHandler" />
+          <pin-input :digits="codeLength" @input="pinChangeHandler" />
           <v-btn
+            id="submit-code"
             :disabled="!pin || pin.length < 5"
             type="submit"
-            form="signup-form"
-            ref="submit-btn"
             rounded
             class="py-6 mt-6 mb-4"
             color="primary"
@@ -70,17 +71,19 @@
             />
             <span v-else>Verify</span>
           </v-btn>
-          <p>
-            <span class="grey--text">Didn't receive an email?</span>
+          <p class="mb-0 text-center">
+            <span class="grey--text text--darken-2"
+              >Didn't receive an email?</span
+            >
             <a
               href="#"
-              @click="resendEmail()"
-              :class="{ 'grey--text': timerStarted }"
+              @click.prevent="resendEmail()"
+              :class="{ 'grey--text text--darken-2': timerRunning }"
             >
-              <span v-if="isResendLoading"> Resending... </span>
+              <span v-if="isResending"> Resending... </span>
               <span v-else>
                 Resend
-                <span v-if="!timerStarted">code</span>
+                <span v-if="!timerRunning">code</span>
                 <span v-else>in {{ time }}s</span>
               </span>
             </a>
@@ -102,19 +105,25 @@ export default {
   },
   data() {
     return {
+      timerDuration: parseInt(
+        process.env.VUE_APPVERIFICATION_CODE_COOLDOWN_MINUTES
+      ),
+      codeLength: parseInt(process.env.VUE_APP_VERIFICATION_CODE_LENGTH),
       dialog: false,
       pin: null,
       isLoading: false,
       isLocked: true,
-      isResendLoading: false,
+      isResending: false,
+      timerWorker: window.timerWorker,
+      time: null,
     };
   },
   computed: {
     email() {
       return this.$route.query.email;
     },
-    timerStarted() {
-      return false;
+    timerRunning() {
+      return this.time > 0;
     },
   },
   methods: {
@@ -123,21 +132,25 @@ export default {
       this.dialog = false;
       this.$emit("locknavigation", false);
       this.isLocked = false;
+      this.$router.go(-1);
       this.$router.replace("/account/email");
     },
     resendEmail() {
-      if (this.isResendLoading || this.timerStarted) return null;
-      this.isResendLoading = true;
+      if (this.isResending || this.timerRunning) return null;
+      this.isResending = true;
+      const { email } = this;
       this.$http
-        .post("/auth/resendverificationmail", `"${this.email}"`)
-        .then(() => this.$store.commit("startTimer", { time: 300 }))
+        .post("/email/resendverificationmail", { email })
+        .then(() => this.startTimer(this.timerDuration))
         .catch((err) => {
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage);
         })
-        .finally(() => (this.isResendLoading = false));
+        .finally(() => (this.isResending = false));
     },
     pinChangeHandler(pin) {
       this.pin = pin;
+      if (this.pin.length === this.codeLength)
+        document.querySelector("#submit-code")?.focus();
     },
     submitCode() {
       if (this.isLoading) return null;
@@ -157,12 +170,32 @@ export default {
         })
         .finally(() => (this.isLoading = false));
     },
+    startTimer(time) {
+      this.time = time;
+      this.timerWorker.postMessage({
+        startTimer: true,
+        time,
+      });
+      this.timerWorker.onmessage = (e) => {
+        this.time = e.data;
+      };
+    },
   },
   mounted() {
     this.$emit("locknavigation", true);
+    const timerDuration = parseInt(
+      this.$route.query.secondsBeforeResend ?? this.timerDuration
+    );
+    this.startTimer(timerDuration);
+  },
+  beforeDestroy() {
+    //clean up web worker
+    this.timerWorker.postMessage({ startTimer: false });
+    this.timerWorker = null;
   },
   watch: {
     $route() {
+      //show exit dialog if user tries to navigate away from page
       if (this.isLocked) this.dialog = true;
     },
   },
