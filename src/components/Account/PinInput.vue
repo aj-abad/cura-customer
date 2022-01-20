@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-space-between pin-numbers">
     <div
-      class="w-100"
+      class="w-100 position-relative"
       v-for="(i, j) in digits"
       :key="j"
       :class="{
@@ -10,6 +10,26 @@
         'ml-1': i === digits,
       }"
     >
+      <div
+        class="
+          position-absolute
+          w-100
+          h-100
+          top
+          left
+          d-flex
+          justify-center
+          align-center
+          pointer-events-none
+        "
+        aria-role="presentation"
+      >
+        <transition name="fade-fast">
+          <div class="font-weight-bold" v-if="pinArray[j]">
+            {{ pinArray[j] }}
+          </div>
+        </transition>
+      </div>
       <input
         ref="pinInput"
         :aria-label="`PIN digit ${i}`"
@@ -32,8 +52,10 @@ export default {
   data() {
     return {
       pin: "",
+      pinArray: Array(this.digits).fill(null),
     };
   },
+  computed: {},
   methods: {
     keydownHandler(e, i) {
       if (e.keyCode !== 8) return null;
@@ -65,7 +87,17 @@ export default {
         pin += el.value.toString();
       });
       this.pin = pin;
+      this.getPinArray();
       this.$emit("input", this.pin);
+    },
+    getPinArray() {
+      const pinArray = Array(this.digits).fill(null);
+      this.$refs.pinInput.forEach((el, i) => {
+        if (el.value) {
+          pinArray[i] = el.value;
+        }
+      });
+      this.pinArray = pinArray;
     },
   },
 };
@@ -77,6 +109,7 @@ export default {
     caret-color: transparent;
     text-align: center;
     font-weight: bold;
+    color: transparent;
   }
 }
 
