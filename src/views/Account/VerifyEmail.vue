@@ -125,7 +125,6 @@ export default {
       this.dialog = false;
       this.$emit("locknavigation", false);
       this.isLocked = false;
-      this.$router.go(-1);
       this.$router.replace("/account/email");
     },
     resendEmail() {
@@ -156,7 +155,7 @@ export default {
         .then(() => {
           this.$emit("locknavigation", false);
           //to avoid redundant navigation
-          this.$router.go(-1);
+
           this.$router.replace({
             name: "WelcomeNewUser",
           });
@@ -179,6 +178,7 @@ export default {
   },
   mounted() {
     this.$emit("locknavigation", true);
+    this.$router.go(-1);
     const timerDuration = parseInt(
       this.$route.query.secondsBeforeResend ?? this.timerDuration
     );
