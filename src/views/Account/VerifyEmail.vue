@@ -155,6 +155,8 @@ export default {
         })
         .then(() => {
           this.$emit("locknavigation", false);
+          //to avoid redundant navigation
+          this.$router.go(-1);
           this.$router.replace({
             name: "WelcomeNewUser",
           });
