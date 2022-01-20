@@ -7,7 +7,7 @@ const store = {
   },
   getters: {
 
-  }
+  },
 }
 
-export default store
+export default store;
