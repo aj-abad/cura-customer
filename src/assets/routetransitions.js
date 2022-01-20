@@ -1,9 +1,5 @@
-const routeTransitions = [
-  {
-    from: "VerifyEmail",
-    to: "WelcomeNewUser",
-    name: "clip-push",
-  }
-]
+const routeTransitions = new Map([
+  ["VerifyEmail-WelcomeNewUser", "clip"],
+])
 
 export default routeTransitions
