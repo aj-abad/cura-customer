@@ -2,8 +2,9 @@ let timer = null;
 let timeRemaining = 0;
 
 
-onmessage = function (shouldStart = false, time = 0) {
-  if (shouldStart) {
+onmessage = function (e) {
+  const { startTimer, time } = e.data
+  if (startTimer) {
     timeRemaining = time;
     timer = setInterval(() => {
       increment()
@@ -17,8 +18,8 @@ onmessage = function (shouldStart = false, time = 0) {
 
 const increment = () => {
   if (timeRemaining > 0) {
-    postMessage()
     timeRemaining--
+    postMessage(timeRemaining)
   }
   else clearInterval(timer)
 }
