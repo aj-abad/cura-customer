@@ -154,10 +154,10 @@ export default {
           email: this.email,
         })
         .then(() => {
+          this.$emit("locknavigation", false);
           this.$router.replace({
-            name: "AccountSetup",
+            name: "WelcomeNewUser",
           });
-          //TODO successful sign up
         })
         .catch((err) => {
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage);
