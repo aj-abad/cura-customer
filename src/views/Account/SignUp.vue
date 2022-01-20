@@ -80,6 +80,7 @@ export default {
   mixins: [focusElement],
   data() {
     return {
+      focusElement: "#password-input",
       email: this.$route.query.email ?? "",
       showPassword: true,
       password: "",
