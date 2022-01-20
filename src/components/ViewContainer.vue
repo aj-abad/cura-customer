@@ -49,6 +49,7 @@
 
 <script>
 import Loader from "@/components/SVG/Loader";
+import routeTransitions from "@/assets/routetransitions";
 export default {
   name: "ViewContainer",
   components: { Loader },
@@ -127,6 +128,15 @@ export default {
         this.lockNavigation = false;
         this.$nextTick(() => (this.lockNavigation = true));
         return null;
+      }
+      //custom transitions
+      const customTransition =
+        routeTransitions.get(`${to.name}-${from.name}`) ||
+        routeTransitions.get(`${from.name}-${to.name}`);
+      if (customTransition) {
+        return (this.transition = `${customTransition}-${
+          to.meta?.depth > from.meta?.depth ? "push" : "pop"
+        }`);
       }
 
       // Default transition
