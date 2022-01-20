@@ -6,8 +6,9 @@
       <h3 class="font-weight-medium grey--text text--darken-2">
         We'll check if you have an account.
       </h3>
-      <form id="email-form" @submit.prevent="submitEmail()" class="mt-6">
+      <form @submit.prevent="submitEmail()" class="mt-6">
         <v-text-field
+          id="email-input"
           v-model.trim="email"
           outlined
           rounded
@@ -41,11 +42,14 @@
 </template>
 
 <script>
+import focusElement from "@/mixins/focuselement";
 const validator = require("email-validator");
 export default {
   name: "Email",
+  mixins: [focusElement],
   data() {
     return {
+      focusElement: "#email-input",
       email: sessionStorage.getItem("email") ?? "",
       isLoading: false,
       isDone: false,
@@ -55,9 +59,6 @@ export default {
     isValidEmail() {
       return validator.validate(this.email);
     },
-  },
-  mounted() {
-    setTimeout(() => document.querySelector("#email-form input")?.focus(), 320);
   },
   methods: {
     submitEmail() {

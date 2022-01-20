@@ -73,9 +73,11 @@
 </template>
 
 <script>
-var owasp = require("owasp-password-strength-test");
+import focusElement from "@/mixins/focuselement";
+const owasp = require("owasp-password-strength-test");
 export default {
   name: "SignUp",
+  mixins: [focusElement],
   data() {
     return {
       email: this.$route.query.email ?? "",
@@ -113,9 +115,6 @@ export default {
       return passwordStrengthMessage;
     },
   },
-  mounted() {
-    setTimeout(() => document.querySelector("#password-input")?.focus(), 320);
-  },
   methods: {
     signUp() {
       if (this.isDone || this.isLoading) return null;
@@ -125,6 +124,8 @@ export default {
       this.$http
         .post("/auth/signup", { email, password })
         .then(() => {
+          //TODO putExtra email resend seconds
+          // const { data } = res;
           this.isDone = true;
           this.$router.replace(`/account/verifyemail?email=${email}`);
         })

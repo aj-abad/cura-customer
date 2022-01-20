@@ -63,19 +63,19 @@
 </template>
 
 <script>
+import focusElement from "@/mixins/focuselement";
 export default {
   name: "SignUp",
+  mixins: [focusElement],
   data() {
     return {
+      focusElement: "#password-input",
       email: this.$route.query.email ?? "",
       showPassword: false,
       password: "",
       isLoading: false,
       isDone: false,
     };
-  },
-  mounted() {
-    setTimeout(() => document.querySelector("#password-input")?.focus(), 320);
   },
   methods: {
     signIn() {
