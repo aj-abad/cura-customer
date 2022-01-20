@@ -98,7 +98,7 @@
 }
 
 .clip-push-enter-to {
-  clip-path: circle(100% at 50% 50%);
+  clip-path: circle(var(--clip-transition-radius) at 50% 50%);
   z-index: 2;
 }
 
@@ -111,7 +111,7 @@
 }
 
 .clip-pop-leave {
-  clip-path: circle(100% at 50% 50%);
+  clip-path: circle(var(--clip-transition-radius) at 50% 50%);
 }
 
 .clip-pop-leave-active {
