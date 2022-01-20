@@ -1,5 +1,33 @@
 <template>
   <div>
+    <v-dialog v-model="dialog">
+      <v-sheet class="rounded-lg text-center pa-4">
+        <h3 class="mb-2">Lost your password?</h3>
+        <p class="mb-4">
+          No worries, we can send a password reset code to your email.
+        </p>
+        <v-btn
+          rounded
+          elevation="0"
+          @click="goBack()"
+          block
+          color="primary"
+          class="py-6 mb-2"
+        >
+          Send password reset code
+        </v-btn>
+        <v-btn
+          @click="dialog = false"
+          block
+          plain
+          rounded
+          elevation="0"
+          class="py-6"
+        >
+          Cancel
+        </v-btn>
+      </v-sheet>
+    </v-dialog>
     <back-nav />
     <div class="px-6">
       <h2>Welcome back</h2>
@@ -29,15 +57,13 @@
           dense
           label="Password"
           hide-details
-          class="mb-0"
+          class="mb-2"
           id="password-input"
           autocomplete="off"
         />
         <p>
           <!-- TODO implement forgot password -->
-          <router-link to="account/resetpassword">
-            Lost your password?
-          </router-link>
+          <a href="#" @click.prevent="dialog = true"> Lost your password? </a>
         </p>
         <v-btn
           type="submit"
@@ -70,6 +96,7 @@ export default {
   data() {
     return {
       focusElement: "#password-input",
+      dialog: false,
       email: this.$route.query.email ?? "",
       showPassword: false,
       password: "",
@@ -86,9 +113,11 @@ export default {
       this.$http
         .post("/auth/signin", { email, password })
         .then((res) => {
-          const { token } = res.data?.token;
-          console.log(token);
           //TODO successful sign in
+          const { user } = res.data;
+          const { token } = res.data.token;
+          this.$store.dispatch("setToken", `Bearer ${token}`);
+          this.$store.dispatch("updateUser", user);
         })
         .catch((err) =>
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage)
