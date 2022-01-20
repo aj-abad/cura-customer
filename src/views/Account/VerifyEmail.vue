@@ -121,11 +121,9 @@ export default {
     goBack() {
       if (!this.isLocked) return null;
       this.dialog = false;
-      setTimeout(() => {
-        this.$emit("locknavigation", false);
-        this.isLocked = false;
-        this.$router.replace("/account/email");
-      }, 300);
+      this.$emit("locknavigation", false);
+      this.isLocked = false;
+      this.$router.replace("/account/email");
     },
     resendEmail() {
       if (this.isResendLoading || this.timerStarted) return null;
