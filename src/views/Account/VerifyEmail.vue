@@ -72,19 +72,13 @@
             <span v-else>Verify</span>
           </v-btn>
           <p class="mb-0 text-center">
-            <span class="grey--text text--darken-2"
-              >Didn't receive an email?</span
-            >
             <a
-              href="#"
               @click.prevent="resendEmail()"
               :class="{ 'grey--text text--darken-2': timerRunning }"
             >
-              <span v-if="isResending"> Resending... </span>
+              <span v-if="!timerRunning">Resend code</span>
               <span v-else>
-                Resend
-                <span v-if="!timerRunning">code</span>
-                <span v-else>in {{ time }}s</span>
+                Resend code in {{ time }} second<span v-if="time !== 1">s</span>
               </span>
             </a>
           </p>
@@ -106,7 +100,7 @@ export default {
   data() {
     return {
       timerDuration: parseInt(
-        process.env.VUE_APPVERIFICATION_CODE_COOLDOWN_MINUTES
+        process.env.VUE_APP_VERIFICATION_CODE_COOLDOWN_MINUTES
       ),
       codeLength: parseInt(process.env.VUE_APP_VERIFICATION_CODE_LENGTH),
       dialog: false,
@@ -155,14 +149,15 @@ export default {
     submitCode() {
       if (this.isLoading) return null;
       this.isLoading = true;
-
       this.$http
         .post("auth/verify", {
           code: this.pin,
           email: this.email,
         })
-        .then((res) => {
-          res;
+        .then(() => {
+          this.$router.replace({
+            name: "AccountSetup",
+          });
           //TODO successful sign up
         })
         .catch((err) => {
