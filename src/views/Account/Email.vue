@@ -70,9 +70,14 @@ export default {
         .post("/auth/checkemail", { email, userType: 1 })
         .then((res) => {
           sessionStorage.setItem("email", email);
-          const route = res.data?.emailExists ? "signin" : "signup";
-          this.$emit("showloading", false, "Checking...");
-          this.$router.push(`/account/${route}?email=${email}`);
+          const name = res.data?.emailExists ? "SignIn" : "SignUp";
+          // this.$emit("showloading", false, "Checking...");
+          this.$router.push({
+            name,
+            query: {
+              email,
+            },
+          });
         })
         .catch((err) => {
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage);

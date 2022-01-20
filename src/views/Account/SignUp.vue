@@ -123,11 +123,13 @@ export default {
 
       this.$http
         .post("/auth/signup", { email, password })
-        .then(() => {
-          //TODO putExtra email resend seconds
-          // const { data } = res;
+        .then((res) => {
+          const { secondsBeforeResend } = res.data;
           this.isDone = true;
-          this.$router.replace(`/account/verifyemail?email=${email}`);
+          this.$router.replace({
+            name: "VerifyEmail",
+            query: { email, secondsBeforeResend },
+          });
         })
         .catch((err) =>
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage)
