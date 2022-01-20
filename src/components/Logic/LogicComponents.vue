@@ -1,9 +1,15 @@
 <template>
-  <div />
+  <div>
+    <auth-setup />
+  </div>
 </template>
 
 <script>
+import AuthSetup from "./Auth";
 export default {
-  name: 'LogicComponents'
-}
+  name: "LogicComponents",
+  components: {
+    AuthSetup,
+  },
+};
 </script>
