@@ -1,7 +1,8 @@
 
 const clipTransition = document.createElement("STYLE")
 clipTransition.setAttribute("data-clip-transition", "")
-const clipRadius = Math.pow((Math.pow(window.innerHeight / 2), 2) + Math.pow(window.innerWidth / 2, 2), 0.5)
+//set to diagonal of screen plus 20px for padding
+const clipRadius = Math.pow((Math.pow(window.innerHeight), 2) + Math.pow(window.innerWidth, 2), 0.5) + 20
 clipTransition.innerHTML = `
 :root {
   --clip-transition-radius: ${clipRadius}px;
