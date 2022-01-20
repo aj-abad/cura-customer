@@ -7,20 +7,24 @@
 </template>
 
 <script>
-import LogicComponents from '@/components/Logic/LogicComponents'
-import ViewContainer from '@/components/ViewContainer'
-import SplashScreen from '@/components/SplashScreen'
+import LogicComponents from "@/components/Logic/LogicComponents";
+import ViewContainer from "@/components/ViewContainer";
+import SplashScreen from "@/components/SplashScreen";
 export default {
-  name: 'App',
-  created () {
-    this.$router.replace('/').catch((err) => err)
+  name: "App",
+  created() {
+    //TODO remove this
+    if (process.env.NODE_ENV === "development") {
+      window.vm = this;
+    }
+    this.$router.replace("/").catch((err) => err);
   },
   components: {
     LogicComponents,
     ViewContainer,
-    SplashScreen
-  }
-}
+    SplashScreen,
+  },
+};
 </script>
 
 <style lang="stylus">
