@@ -11,18 +11,20 @@ const store = {
     token: null,
   },
   actions: {
-    signIn: ({ getters, commit }, payload) => {
-      commit('setUser', payload.user);
-      commit('setToken', payload.token);
-      localStorage.setItem("token", payload.token);
-      localStorage.setItem("user", JSON.stringify(getters.getUser));
+    setToken: ({ commit }, payload) => {
+      commit('setToken', payload);
+      localStorage.setItem('token', payload);
     },
+    updateUser: ({ getters, commit }, payload) => {
+      commit('updateUser', payload);
+      localStorage.setItem("user", JSON.stringify(getters.getUser));
+    }
   },
   mutations: {
     setToken: (state, payload) => {
       state.token = payload
     },
-    setUser: (state, payload) => {
+    updateUser: (state, payload) => {
       const { user } = state
       const { userId, userStatus, firstName, lastName, mobile, profilePhoto } = payload
       user.userId = userId ?? user.userId;
