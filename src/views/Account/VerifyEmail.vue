@@ -99,9 +99,8 @@ export default {
   },
   data() {
     return {
-      timerDuration: parseInt(
-        process.env.VUE_APP_VERIFICATION_CODE_COOLDOWN_MINUTES
-      ),
+      timerDuration:
+        parseInt(process.env.VUE_APP_VERIFICATION_CODE_COOLDOWN_MINUTES) * 60,
       codeLength: parseInt(process.env.VUE_APP_VERIFICATION_CODE_LENGTH),
       dialog: false,
       pin: null,
