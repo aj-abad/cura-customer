@@ -1,6 +1,7 @@
 <template>
   <div>
-    <router-view></router-view>
+    <!-- TODO do this -->
+    <router-view />
   </div>
 </template>
 
