@@ -5,9 +5,9 @@
       v-for="(i, j) in digits"
       :key="j"
       :class="{
-        'pr-1': i === 1,
-        'px-1': i > 1 && i < digits,
-        'pl-1': i === digits,
+        'mr-1': i === 1,
+        'mx-1': i > 1 && i < digits,
+        'ml-1': i === digits,
       }"
     >
       <input
