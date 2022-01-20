@@ -91,36 +91,6 @@ export default {
     },
   },
   watch: {
-    userStatus() {
-      // Sign out handler
-      if (this.userStatus === 0) {
-        this.$router.replace("/").catch((err) => err);
-        this.cachedComponents.pop();
-        this.$nextTick(() => {
-          this.cachedComponents.push("Home");
-        });
-      }
-
-      // Sign in handler
-      if (this.userStatus === 1) {
-        if (this.$store.getters.getAccount.firstTimeUser) {
-          this.$router.replace("/onboarding/welcome").catch((err) => err);
-        } else {
-          if (this.$store.getters.getAddress.coords.latitude !== null) {
-            this.$router.replace("/home").catch((err) => err);
-          } else {
-            this.$router.replace("/requestlocation").catch((err) => err);
-          }
-        }
-      }
-
-      // New sign up handler
-      if (this.userStatus === 2) {
-        this.$router
-          .replace("/finishregistration/basicinfo")
-          .catch((err) => err);
-      }
-    },
     $route(to, from) {
       // prevent route changes if enabled
       if (this.lockNavigation) {
