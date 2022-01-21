@@ -67,6 +67,7 @@
         </p>
         <v-btn
           type="submit"
+          :disabled="password?.length === 0"
           block
           :class="{ 'pointer-events-none': isLoading }"
           rounded
