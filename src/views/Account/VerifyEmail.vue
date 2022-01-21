@@ -105,7 +105,7 @@ export default {
       dialog: false,
       pin: null,
       isLoading: false,
-      isLocked: true,
+      isLocked: false,
       isResending: false,
       timerWorker: window.timerWorker,
       time: null,
@@ -179,6 +179,7 @@ export default {
   mounted() {
     this.$emit("locknavigation", true);
     this.$router.go(-1);
+    this.isLocked = true;
     const timerDuration = parseInt(
       this.$route.query.secondsBeforeResend ?? this.timerDuration
     );
