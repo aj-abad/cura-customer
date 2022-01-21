@@ -178,8 +178,9 @@ export default {
   },
   mounted() {
     this.$emit("locknavigation", true);
+    console.log(this.isLocked);
     this.$router.go(-1);
-    this.isLocked = true;
+    setTimeout(() => (this.isLocked = true), 100);
     const timerDuration = parseInt(
       this.$route.query.secondsBeforeResend ?? this.timerDuration
     );
