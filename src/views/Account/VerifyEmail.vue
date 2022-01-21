@@ -31,7 +31,7 @@
         @click="dialog = true"
         icon
         v-ripple="{ class: 'primary--text' }"
-        aria-label="Go back"
+        aria-label="Cancel account creation"
       >
         <v-icon color="primary"> mdi-close </v-icon>
       </v-btn>
