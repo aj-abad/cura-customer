@@ -9,9 +9,8 @@
         </p>
         <v-btn
           v-ripple="{ class: 'primary--text' }"
-          class="py-6"
+          large
           block
-          rounded
           elevation="0"
           color="white"
         >

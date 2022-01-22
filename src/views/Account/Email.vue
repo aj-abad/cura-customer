@@ -19,12 +19,11 @@
         />
         <v-btn
           type="submit"
+          large
           block
           :class="{ 'pointer-events-none': isLoading }"
-          rounded
           color="primary"
           elevation="0"
-          class="py-6"
           :disabled="!isValidEmail"
         >
           <v-progress-circular

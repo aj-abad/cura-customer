@@ -7,23 +7,16 @@
           No worries, we can send a password reset code to your email.
         </p>
         <v-btn
-          rounded
+          large
           elevation="0"
           @click="goBack()"
           block
           color="primary"
-          class="py-6 mb-2"
+          class="mb-2"
         >
           Send password reset code
         </v-btn>
-        <v-btn
-          @click="dialog = false"
-          block
-          plain
-          rounded
-          elevation="0"
-          class="py-6"
-        >
+        <v-btn @click="dialog = false" block plain large elevation="0">
           Cancel
         </v-btn>
       </v-sheet>
@@ -70,10 +63,10 @@
           :disabled="password?.length === 0"
           block
           :class="{ 'pointer-events-none': isLoading }"
-          rounded
+          large
           color="primary"
           elevation="0"
-          class="py-6 mb-4"
+          class="mb-4"
         >
           <v-progress-circular
             indeterminate

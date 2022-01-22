@@ -5,23 +5,16 @@
         <h3 class="mb-2">Cancel account creation?</h3>
         <p class="mb-4">Do you wish to cancel signing up?</p>
         <v-btn
-          rounded
+          large
           elevation="0"
           @click="goBack()"
           block
           color="primary"
-          class="py-6 mb-2"
+          class="mb-2"
         >
           Yes, go back
         </v-btn>
-        <v-btn
-          @click="dialog = false"
-          block
-          plain
-          rounded
-          elevation="0"
-          class="py-6"
-        >
+        <v-btn @click="dialog = false" block plain large elevation="0">
           No, continue
         </v-btn>
       </v-sheet>
@@ -55,10 +48,10 @@
             id="submit-code"
             :disabled="!pin || pin.length < 5"
             type="submit"
-            rounded
-            class="py-6 mt-6 mb-4"
+            class="mt-6 mb-4"
             color="primary"
             elevation="0"
+            large
             block
             @click="submitCode"
           >

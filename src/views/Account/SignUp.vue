@@ -44,13 +44,13 @@
           </small>
         </p>
         <v-btn
+          large
           type="submit"
           block
           :class="{ 'pointer-events-none': isLoading }"
-          rounded
           color="primary"
           elevation="0"
-          class="py-6 mb-4"
+          class="mb-4"
           :disabled="passwordStrength === 0"
         >
           <v-progress-circular
