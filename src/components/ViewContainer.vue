@@ -104,9 +104,7 @@ export default {
         routeTransitions.get(`${to.name}-${from.name}`) ||
         routeTransitions.get(`${from.name}-${to.name}`);
       if (customTransition) {
-        return (this.transition = `${customTransition}-${
-          to.meta?.depth > from.meta?.depth ? "push" : "pop"
-        }`);
+        return (this.transition = customTransition);
       }
 
       // Default transition
