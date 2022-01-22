@@ -110,15 +110,16 @@ export default {
       if (this.isDone || this.isLoading) return null;
       this.isLoading = true;
       const { email, password } = this;
-
       this.$http
         .post("/auth/signin", { email, password })
         .then((res) => {
           //TODO successful sign in
-          const { user } = res.data;
-          const { token } = res.data.token;
-          this.$store.dispatch("setToken", `Bearer ${token}`);
+          const { user, token } = res.data;
+          this.$store.dispatch("setToken", token);
           this.$store.dispatch("updateUser", user);
+          const { userStatus } = this.$store.getters.getUser;
+          const name = userStatus === 1 ? "Home" : "WelcomeNewUser";
+          this.$router.replace({ name });
         })
         .catch((err) =>
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage)
