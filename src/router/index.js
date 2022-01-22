@@ -26,8 +26,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const store = router.app.$store
   if (!store) return next()
-  console.log(store.getters.isLoggedIn)
-  console.log(to, to.meta.requireGuest)
   const { userStatus } = store.getters.getUser
   if (to?.meta.requireGuest && store.getters.isLoggedIn)
     return next(false)
