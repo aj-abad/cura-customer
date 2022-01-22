@@ -117,7 +117,7 @@ export default {
       if (!this.isLocked) return null;
       this.dialog = false;
       this.isLocked = false;
-      this.$router.push("/account/email");
+      this.$router.go(-2);
     },
     resendEmail() {
       if (this.isResending || this.timerRunning) return null;
@@ -147,7 +147,7 @@ export default {
         .then(() => {
           //to avoid redundant navigation
           this.isLocked = false;
-          this.$router.replace({
+          this.$router.push({
             name: "WelcomeNewUser",
           });
         })
@@ -178,8 +178,9 @@ export default {
     this.timerWorker.postMessage({ startTimer: false });
     this.timerWorker = null;
   },
-  beforeRouteUpdate(to, from, next) {
+  beforeRouteLeave(to, from, next) {
     if (this.isLocked) {
+      console.log("locked");
       this.dialog = true;
       return next(false);
     }

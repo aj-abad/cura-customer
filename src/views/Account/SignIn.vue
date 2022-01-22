@@ -112,7 +112,7 @@ export default {
           this.$store.dispatch("updateUser", user);
           const { userStatus } = this.$store.getters.getUser;
           const name = userStatus === 1 ? "Home" : "WelcomeNewUser";
-          this.$router.replace({ name });
+          this.$router.push({ name });
         })
         .catch((err) =>
           this.$emit("snackbarmessage", err?.response?.data?.errorMessage)
