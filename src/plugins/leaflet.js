@@ -6,8 +6,8 @@ import { Icon } from 'leaflet'
 delete Icon.Default.prototype._getIconUrl
 
 Icon.Default.mergeOptions({
-  iconRetinaUrl: `${process.env.VUE_APP_CLIENT_URL}/img/svg/pin.svg`,
-  iconUrl: `${process.env.VUE_APP_CLIENT_URL}/img/svg/pin.svg`,
+  iconRetinaUrl: `img/svg/pin.svg`,
+  iconUrl: `$img/svg/pin.svg`,
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
 
