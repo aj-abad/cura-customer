@@ -114,7 +114,6 @@ export default {
   },
   methods: {
     goBack() {
-      if (!this.isLocked) return null;
       this.dialog = false;
       this.isLocked = false;
       this.$router.go(-2);
