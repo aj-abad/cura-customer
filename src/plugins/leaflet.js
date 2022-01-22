@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { LMap, LTileLayer, LMarker, LPopup, LIcon } from 'vue2-leaflet'
-import '../assets/leaflet.css'
+import 'leaflet/dist/leaflet.css'
 
 import { Icon } from 'leaflet'
 delete Icon.Default.prototype._getIconUrl
