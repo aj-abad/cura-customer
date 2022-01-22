@@ -98,7 +98,7 @@ export default {
       dialog: false,
       pin: null,
       isLoading: false,
-      isLocked: false,
+      isLocked: true,
       isResending: false,
       timerWorker: window.timerWorker,
       time: null,
@@ -116,9 +116,8 @@ export default {
     goBack() {
       if (!this.isLocked) return null;
       this.dialog = false;
-      this.$emit("locknavigation", false);
       this.isLocked = false;
-      this.$router.replace("/account/email");
+      this.$router.push("/account/email");
     },
     resendEmail() {
       if (this.isResending || this.timerRunning) return null;
@@ -146,9 +145,8 @@ export default {
           email: this.email,
         })
         .then(() => {
-          this.$emit("locknavigation", false);
           //to avoid redundant navigation
-
+          this.isLocked = false;
           this.$router.replace({
             name: "WelcomeNewUser",
           });
@@ -170,10 +168,6 @@ export default {
     },
   },
   mounted() {
-    this.$emit("locknavigation", true);
-    console.log(this.isLocked);
-    this.$router.go(-1);
-    setTimeout(() => (this.isLocked = true), 100);
     const timerDuration = parseInt(
       this.$route.query.secondsBeforeResend ?? this.timerDuration
     );
@@ -184,11 +178,12 @@ export default {
     this.timerWorker.postMessage({ startTimer: false });
     this.timerWorker = null;
   },
-  watch: {
-    $route() {
-      //show exit dialog if user tries to navigate away from page
-      if (this.isLocked) this.dialog = true;
-    },
+  beforeRouteUpdate(to, from, next) {
+    if (this.isLocked) {
+      this.dialog = true;
+      return next(false);
+    }
+    return next();
   },
 };
 </script>
