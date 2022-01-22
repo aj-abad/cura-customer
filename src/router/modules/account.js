@@ -11,7 +11,8 @@ const routes = [
     name: 'Email',
     component: Email,
     meta: {
-      depth: 1
+      depth: 1,
+      requireGuest: true,
     }
   },
   {
@@ -19,7 +20,8 @@ const routes = [
     name: 'SignIn',
     component: SignIn,
     meta: {
-      depth: 2
+      depth: 2,
+      requireGuest: true,
     }
   },
   {
@@ -27,7 +29,8 @@ const routes = [
     name: 'SignUp',
     component: SignUp,
     meta: {
-      depth: 2
+      depth: 2,
+      requireGuest: true,
     }
   },
   {
@@ -35,7 +38,8 @@ const routes = [
     name: 'VerifyEmail',
     component: VerifyEmail,
     meta: {
-      depth: 3
+      depth: 3,
+      requireGuest: true,
     }
   },
   {
@@ -43,7 +47,8 @@ const routes = [
     name: "WelcomeNewUser",
     component: WelcomeNewUser,
     meta: {
-      depth: 4
+      depth: 4,
+      userStatus: 2
     }
   },
   {

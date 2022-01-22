@@ -11,7 +11,8 @@ const routes = [
     name: 'Start',
     component: Start,
     meta: {
-      depth: 0
+      depth: 0,
+      requireGuest: true
     }
   }
 ].concat(accountRoutes)
@@ -20,6 +21,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const store = router.app.$store
+  if (!store) return next()
+  console.log(store.getters.isLoggedIn)
+  console.log(to, to.meta.requireGuest)
+  const { userStatus } = store.getters.getUser
+  if (to?.meta.requireGuest && store.getters.isLoggedIn)
+    return next(false)
+  if (to.meta.userStatus && !to.meta.userStatus.includes(userStatus))
+    return next(false)
+  return next()
 })
 
 export default router
