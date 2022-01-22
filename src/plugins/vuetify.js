@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-// import '../assets/vuetify.css'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
