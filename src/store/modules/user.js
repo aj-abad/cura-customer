@@ -54,6 +54,7 @@ const store = {
   getters: {
     getToken: state => state.token,
     getUser: state => state.user,
+    isLoggedIn: state => state.user.userId !== null,
   }
 }
 
