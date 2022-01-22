@@ -29,7 +29,6 @@
         <router-view
           @snackbarmessage="showSnackbar"
           @showloading="showLoadingDialog"
-          @locknavigation="lockNavigationHandler"
           class="page"
           id="view"
         />
@@ -61,7 +60,6 @@ export default {
       loadingDialog: false,
       loadingMessage: "Loading...",
       snackbarMessage: "",
-      lockNavigation: false,
     };
   },
   computed: {
@@ -79,26 +77,15 @@ export default {
           : "Cannot connect to Cura.");
     },
     showLoadingDialog(status, message) {
-      this.lockNavigation = status;
       this.loadingDialog = status;
       if (message) this.loadingMessage = message;
       this.$nextTick(() =>
         document.querySelector("#progress-message")?.focus()
       );
     },
-    lockNavigationHandler(lock) {
-      this.lockNavigation = lock;
-    },
   },
   watch: {
     $route(to, from) {
-      // prevent route changes if enabled
-      if (this.lockNavigation) {
-        this.$router.push(from).catch((err) => err);
-        this.lockNavigation = false;
-        this.$nextTick(() => (this.lockNavigation = true));
-        return null;
-      }
       //custom transitions
       const customTransition =
         routeTransitions.get(`${to.name}-${from.name}`) ||
