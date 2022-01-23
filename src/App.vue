@@ -17,7 +17,18 @@ export default {
     if (process.env.NODE_ENV === "development") {
       window.vm = this;
     }
-    this.$router.replace("/").catch((err) => err);
+    const userStatusRedirect = new Map([
+      [1, "Home"],
+      [2, "WelcomeNewUser"],
+    ]);
+
+    return this.$router
+      .replace({
+        name:
+          userStatusRedirect.get(this.$store.getters.getUser.userStatus) ??
+          "Start",
+      })
+      .catch((err) => err);
   },
   components: {
     LogicComponents,
