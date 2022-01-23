@@ -6,7 +6,16 @@
         <p class="body-1 mb-6">
           You're a few steps away from having self-care at your fingertips.
         </p>
-        <v-btn large block elevation="0" color="white"> Get started </v-btn>
+        <v-btn
+          to="/account/setup/basicinfo"
+          replace
+          large
+          block
+          elevation="0"
+          color="white"
+        >
+          Get started
+        </v-btn>
       </div>
     </div>
   </div>
