@@ -106,7 +106,6 @@ export default {
       this.$http
         .post("/auth/signin", { email, password })
         .then((res) => {
-          //TODO successful sign in
           const { user, token } = res.data;
           this.$store.dispatch("setToken", token);
           this.$store.dispatch("updateUser", user);
