@@ -82,10 +82,9 @@ export default {
       }
     },
     computePin() {
-      let pin = "";
-      this.$refs.pinInput.forEach((el) => {
-        pin += el.value.toString();
-      });
+      const pin = this.$refs.pinInput.reduce((acc, el) => {
+        return acc + (el.value ? el.value : "");
+      }, "");
       this.pin = pin;
       this.getPinArray();
       this.$emit("input", this.pin);
