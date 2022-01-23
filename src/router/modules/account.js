@@ -2,8 +2,10 @@ import Email from '../../views/Account/Email'
 import SignUp from '../../views/Account/SignUp'
 import SignIn from '../../views/Account/SignIn'
 import VerifyEmail from '../../views/Account/VerifyEmail'
-import AccountSetup from "../../views/Account/Setup/Index";
 import WelcomeNewUser from "../../views/Account/WelcomeNewUser";
+import AccountSetup from "../../views/Account/Setup/Index";
+import BasicInfo from "../../views/Account/Setup/BasicInfo";
+
 
 const routes = [
   {
@@ -56,10 +58,11 @@ const routes = [
     component: AccountSetup,
     children: [
       {
-        path: '',
-        name: 'AccountSetup',
+        path: 'basicinfo',
+        name: 'BasicInfo',
+        component: BasicInfo,
         meta: {
-          depth: 4
+          depth: 5,
         }
       }
     ],
