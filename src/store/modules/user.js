@@ -1,14 +1,17 @@
+const savedState = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+const token = localStorage.getItem('token') ?? null;
+
 const store = {
   state: {
     user: {
-      userId: null,
-      userStatus: null,
-      firstName: null,
-      lastName: null,
-      mobile: null,
-      profilePhoto: null,
+      userId: savedState?.userId ?? null,
+      userStatus: savedState?.userStatus ?? null,
+      firstName: savedState?.firstName ?? null,
+      lastName: savedState?.lastName ?? null,
+      mobile: savedState?.mobile ?? null,
+      profilePhoto: savedState?.profilePhoto ?? null,
     },
-    token: null,
+    token,
   },
   actions: {
     setToken: ({ commit }, payload) => {
