@@ -111,6 +111,7 @@ export default {
           this.$store.dispatch("updateUser", user);
           const { userStatus } = this.$store.getters.getUser;
           const name = userStatus === 1 ? "Home" : "WelcomeNewUser";
+          this.$store.commit("socketConnect", token);
           this.$router.push({ name });
         })
         .catch((err) =>
