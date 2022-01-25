@@ -10,7 +10,6 @@ const registerEvents = (socket) => {
 
 const connectSocket = (token) => {
   const socket = io(process.env.VUE_APP_API, {
-    path: '/socket',
     transports: ['websocket', 'polling'],
     auth: {
       token
