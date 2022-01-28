@@ -27,8 +27,8 @@
     <transition :name="transition">
       <keep-alive :include="cachedComponents">
         <router-view
-          @snackbarmessage="showSnackbar"
-          @showloading="showLoadingDialog"
+          @snackbarMessage="showSnackbar"
+          @showLoading="showLoadingDialog"
           class="page"
           id="view"
         />

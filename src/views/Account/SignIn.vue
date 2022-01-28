@@ -115,7 +115,7 @@ export default {
           this.$router.push({ name });
         })
         .catch((err) =>
-          this.$emit("snackbarmessage", err?.response?.data?.errorMessage)
+          this.$emit("snackbarMessage", err?.response?.data?.errorMessage)
         )
         .finally(() => (this.isLoading = false));
     },
