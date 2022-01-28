@@ -1,5 +1,12 @@
 <template>
-  <v-btn @click="goForward()" color="primary" elevation="0" large block>
+  <v-btn
+    :disabled="!canGoForward"
+    @click="goForward()"
+    color="primary"
+    elevation="0"
+    large
+    block
+  >
     Next <v-icon small>mdi-chevron-right</v-icon>
   </v-btn>
 </template>
@@ -8,6 +15,17 @@ export default {
   name: "ForwardButton",
   props: {
     currentStep: Number,
+    userInfo: Object,
+  },
+  computed: {
+    canGoForward() {
+      if (this.currentStep === 1) {
+        const { firstName, lastName } = this.userInfo;
+        console.log(firstName, lastName, !!firstName && !!lastName);
+        return !!firstName && !!lastName;
+      }
+      return false;
+    },
   },
   methods: {
     goForward() {
