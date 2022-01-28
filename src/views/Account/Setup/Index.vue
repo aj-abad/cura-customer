@@ -25,7 +25,7 @@
         @showExitDialog="exitDialog = true"
       />
     </div>
-    <progress-indicator :steps="4" :currentStep="currentStep" />
+    <progress-indicator :steps="steps" :currentStep="currentStep" />
     <v-sheet
       class="flex-grow-1 rounded-xl bottom-sheet"
       style="overflow: hidden"
@@ -35,9 +35,7 @@
       </transition>
     </v-sheet>
     <div class="position-absolute w-100 pa-6 bottom left">
-      <v-btn @click="goForward()" color="primary" elevation="0" large block>
-        Next <v-icon small>mdi-chevron-right</v-icon>
-      </v-btn>
+      <forward-button :currentStep="currentStep" :steps="steps" />
     </div>
   </div>
 </template>
@@ -45,9 +43,10 @@
 <script>
 import ProgressIndicator from "@/components/Account/Setup/ProgressIndicator";
 import BackButton from "@/components/Account/Setup/BackButton";
+import ForwardButton from "@/components/Account/Setup/ForwardButton";
 export default {
   name: "AccountSetup",
-  components: { ProgressIndicator, BackButton },
+  components: { ProgressIndicator, BackButton, ForwardButton },
   data() {
     return {
       exitDialog: false,
@@ -81,11 +80,6 @@ export default {
       this.isLocked = false;
       this.$store.dispatch("signOut");
       this.$router.replace("/");
-    },
-  },
-  watch: {
-    $route(to, from) {
-      console.log(to, from);
     },
   },
   beforeRouteLeave(to, from, next) {
