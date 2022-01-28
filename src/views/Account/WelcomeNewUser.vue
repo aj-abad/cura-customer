@@ -8,7 +8,6 @@
         </p>
         <v-btn
           to="/account/setup/basicinfo"
-          replace
           large
           block
           elevation="0"
