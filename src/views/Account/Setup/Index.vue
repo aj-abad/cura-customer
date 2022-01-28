@@ -5,7 +5,7 @@
         <h3 class="mb-2">Cancel account setup?</h3>
         <p class="mb-4">You may continue setting up your account any time.</p>
         <v-btn
-          @click="$store.dispatch('')"
+          @click="signOut()"
           large
           elevation="0"
           block
@@ -20,7 +20,10 @@
       </v-sheet>
     </v-dialog>
     <div class="mt-2 mb-4">
-      <back-button :currentStep="currentStep" />
+      <back-button
+        :currentStep="currentStep"
+        @showExitDialog="exitDialog = true"
+      />
     </div>
     <progress-indicator :steps="4" :currentStep="currentStep" />
     <v-sheet
@@ -48,6 +51,7 @@ export default {
   data() {
     return {
       exitDialog: false,
+      isLocked: true,
       transition: "slide-push",
       userInfo: {
         firstName: "",
@@ -67,16 +71,24 @@ export default {
       userInfo: this.userInfo,
     };
   },
+  methods: {
+    signOut() {
+      this.isLocked = false;
+      this.$store.dispatch("signOut");
+      this.$router.replace("/");
+    },
+  },
   watch: {
     $route(to, from) {
       console.log(to, from);
     },
   },
   beforeRouteLeave(to, from, next) {
-    if (this.currentStep === 1) {
+    if (this.currentStep === 1 && this.isLocked) {
       this.exitDialog = true;
       return next(false);
     }
+    return next(true);
   },
 };
 </script>

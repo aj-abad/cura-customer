@@ -13,7 +13,7 @@ export default {
   methods: {
     goBack() {
       if (this.currentStep > 1) return this.$router.go(-1);
-      else $emit("show-exit-dialog");
+      else this.$emit("showExitDialog");
     },
   },
 };
