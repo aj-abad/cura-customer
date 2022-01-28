@@ -179,7 +179,6 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     if (this.isLocked) {
-      console.log("locked");
       this.dialog = true;
       return next(false);
     }
