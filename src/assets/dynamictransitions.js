@@ -2,7 +2,10 @@
 const root = document.querySelector(":root")
 
 const setClipTransitionRadius = () => {
-  root.style.setProperty("--clip-transition-radius", `${Math.pow((Math.pow(window.innerHeight), 2) + Math.pow(window.innerWidth, 2), 0.5) + 20}px`);
+  const hyp = Math.sqrt((Math.pow(window.innerHeight, 2)) + (Math.pow(window.innerWidth, 2)))
+  const duration = hyp * 0.6 / 380
+  root.style.setProperty("--clip-transition-radius", `${hyp + 5}px`);
+  root.style.setProperty("--clip-transition-duration", `${duration}s`)
 }
 
 setClipTransitionRadius()
