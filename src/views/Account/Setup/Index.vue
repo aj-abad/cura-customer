@@ -27,11 +27,15 @@
     </div>
     <progress-indicator :steps="steps" :currentStep="currentStep" />
     <v-sheet
-      class="flex-grow-1 rounded-xl bottom-sheet"
+      class="flex-grow-1 rounded-xl bottom-sheet position-relative"
       style="overflow: hidden"
     >
       <transition :name="transition">
-        <router-view class="account-setup-view" />
+        <router-view
+          class="account-setup-view"
+          :currentStep="currentStep"
+          :steps="steps"
+        />
       </transition>
     </v-sheet>
     <div class="position-absolute w-100 pa-6 bottom left">
@@ -80,6 +84,14 @@ export default {
       this.isLocked = false;
       this.$store.dispatch("signOut");
       this.$router.replace("/");
+    },
+  },
+  watch: {
+    $route(to, from) {
+      if (!to.meta.step) return null;
+      const transition =
+        to.meta.step > from.meta.step ? "slide-push" : "slide-pop";
+      return (this.transition = transition);
     },
   },
   beforeRouteLeave(to, from, next) {
