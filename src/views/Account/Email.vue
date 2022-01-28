@@ -63,14 +63,12 @@ export default {
     submitEmail() {
       if (this.isLoading || this.isDone) return null;
       this.isLoading = true;
-      // this.$emit("showloading", true, "Checking...");
       const email = this.email?.trim()?.toLowerCase();
       this.$http
         .post("/auth/checkemail", { email, userType: 1 })
         .then((res) => {
           sessionStorage.setItem("email", email);
           const name = res.data?.emailExists ? "SignIn" : "SignUp";
-          // this.$emit("showloading", false, "Checking...");
           this.$router.push({
             name,
             query: {
@@ -79,11 +77,10 @@ export default {
           });
         })
         .catch((err) => {
-          this.$emit("snackbarmessage", err?.response?.data?.errorMessage);
+          this.$emit("snackbarMessage", err?.response?.data?.errorMessage);
         })
         .finally(() => {
           this.isLoading = false;
-          // this.$emit("showloading", false, null);
         });
     },
   },
