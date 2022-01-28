@@ -24,6 +24,7 @@ const store = {
     },
     signOut({ commit }) {
       commit('signOut');
+      commit('socketDisconnect', null, { root: true })
       localStorage.removeItem('token');
       localStorage.removeItem('user');
     }
