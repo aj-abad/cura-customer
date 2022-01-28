@@ -1,7 +1,7 @@
 <template>
   <div class="bglight d-flex flex-column justify-end">
     <div style="height: 96px">
-      <!-- TODO add progress indicator -->
+      <progress-indicator />
     </div>
     <v-sheet
       class="rounded-xl bottom-sheet"
@@ -18,7 +18,9 @@
 </template>
 
 <script>
+import ProgressIndicator from "@/components/Account/ProgressIndicator";
 export default {
+  components: { ProgressIndicator },
   name: "AccountSetup",
   data() {
     return {
