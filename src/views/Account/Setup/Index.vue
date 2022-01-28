@@ -62,6 +62,11 @@ export default {
     };
   },
   computed: {
+    steps() {
+      return this.$router.options.routes.find(
+        (route) => route.name === "AccountSetup"
+      ).children.length;
+    },
     currentStep() {
       return this.$route.meta.step;
     },
