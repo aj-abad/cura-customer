@@ -5,7 +5,7 @@ import VerifyEmail from '../../views/Account/VerifyEmail'
 import WelcomeNewUser from "../../views/Account/WelcomeNewUser";
 import AccountSetup from "../../views/Account/Setup/Index";
 import BasicInfo from "../../views/Account/Setup/BasicInfo";
-
+import Mobile from "../../views/Account/Setup/Mobile"
 
 const routes = [
   {
@@ -69,7 +69,7 @@ const routes = [
     {
       path: 'mobile',
       name: 'Mobile',
-      component: BasicInfo,
+      component: Mobile,
       meta: {
         depth: 6,
         step: 2,
