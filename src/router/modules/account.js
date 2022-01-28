@@ -56,6 +56,7 @@ const routes = [
   {
     path: '/account/setup',
     component: AccountSetup,
+    name: "AccountSetup",
     children: [{
       path: 'basicinfo',
       name: 'BasicInfo',
