@@ -1,13 +1,18 @@
 <template>
   <div class="bglight d-flex flex-column justify-end">
-    <div style="height: 96px">
-      <progress-indicator />
+    <div class="my-2">
+      <v-btn @click="goBack()" plain>
+        <v-icon small>mdi-chevron-left</v-icon> Go back
+      </v-btn>
     </div>
+    <progress-indicator :steps="4" :currentStep="currentStep" />
     <v-sheet
-      class="rounded-xl bottom-sheet"
-      style="height: calc(100vh - 96px); overflow: hidden"
+      class="flex-grow-1 rounded-xl bottom-sheet"
+      style="overflow: hidden"
     >
-      <router-view class="account-setup-view" />
+      <transition :name="transition">
+        <router-view class="account-setup-view" />
+      </transition>
     </v-sheet>
     <div class="position-absolute w-100 pa-6 bottom left">
       <v-btn color="primary" elevation="0" large block>
@@ -20,10 +25,11 @@
 <script>
 import ProgressIndicator from "@/components/Account/ProgressIndicator";
 export default {
-  components: { ProgressIndicator },
   name: "AccountSetup",
+  components: { ProgressIndicator },
   data() {
     return {
+      transition: "slide-push",
       userInfo: {
         firstName: "",
         lastName: "",
@@ -32,10 +38,24 @@ export default {
       },
     };
   },
+  computed: {
+    currentStep() {
+      return this.$route.meta.step;
+    },
+  },
   provide() {
     return {
       userInfo: this.userInfo,
     };
+  },
+  watch: {
+    $route(to, from) {
+      console.log(to, from);
+    },
+  },
+  beforeRouteLeave(to, from, next) {
+    alert("x");
+    next(false);
   },
 };
 </script>
