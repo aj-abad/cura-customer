@@ -28,7 +28,6 @@
       label="Last name"
       v-model.trim="userInfo.lastName"
     />
-    <h1 v-for="i in 100" :key="i">test</h1>
   </div>
 </template>
 
