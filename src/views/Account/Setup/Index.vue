@@ -20,9 +20,7 @@
       </v-sheet>
     </v-dialog>
     <div class="mt-2 mb-4">
-      <v-btn @click="goBack()" plain>
-        <v-icon small>mdi-chevron-left</v-icon> Go back
-      </v-btn>
+      <back-button :currentStep="currentStep" />
     </div>
     <progress-indicator :steps="4" :currentStep="currentStep" />
     <v-sheet
@@ -43,9 +41,10 @@
 
 <script>
 import ProgressIndicator from "@/components/Account/Setup/ProgressIndicator";
+import BackButton from "@/components/Account/Setup/BackButton";
 export default {
   name: "AccountSetup",
-  components: { ProgressIndicator },
+  components: { ProgressIndicator, BackButton },
   data() {
     return {
       exitDialog: false,
@@ -61,12 +60,6 @@ export default {
   computed: {
     currentStep() {
       return this.$route.meta.step;
-    },
-  },
-  methods: {
-    goBack() {
-      if (this.currentStep > 1) return this.$router.go(-1);
-      else this.exitDialog = true;
     },
   },
   provide() {
