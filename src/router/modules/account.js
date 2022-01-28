@@ -56,15 +56,24 @@ const routes = [
   {
     path: '/account/setup',
     component: AccountSetup,
-    children: [
-      {
-        path: 'basicinfo',
-        name: 'BasicInfo',
-        component: BasicInfo,
-        meta: {
-          depth: 5,
-        }
+    children: [{
+      path: 'basicinfo',
+      name: 'BasicInfo',
+      component: BasicInfo,
+      meta: {
+        depth: 5,
+        step: 1,
+      },
+    },
+    {
+      path: 'mobile',
+      name: 'Mobile',
+      component: BasicInfo,
+      meta: {
+        depth: 6,
+        step: 2,
       }
+    }
     ],
   }
 ]
