@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import ProgressIndicator from "@/components/Account/Setup/  ProgressIndicator";
+import ProgressIndicator from "@/components/Account/Setup/ProgressIndicator";
 export default {
   name: "AccountSetup",
   components: { ProgressIndicator },
