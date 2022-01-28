@@ -1,6 +1,25 @@
 <template>
   <div class="bglight d-flex flex-column justify-end">
-    <div class="my-2">
+    <v-dialog v-model="exitDialog">
+      <v-sheet class="rounded-lg text-center pa-4">
+        <h3 class="mb-2">Cancel account setup?</h3>
+        <p class="mb-4">You may continue setting up your account any time.</p>
+        <v-btn
+          @click="$store.dispatch('')"
+          large
+          elevation="0"
+          block
+          color="primary"
+          class="mb-2"
+        >
+          Yes, go back
+        </v-btn>
+        <v-btn @click="exitDialog = false" block plain large elevation="0">
+          No, continue
+        </v-btn>
+      </v-sheet>
+    </v-dialog>
+    <div class="mt-2 mb-4">
       <v-btn @click="goBack()" plain>
         <v-icon small>mdi-chevron-left</v-icon> Go back
       </v-btn>
@@ -15,7 +34,7 @@
       </transition>
     </v-sheet>
     <div class="position-absolute w-100 pa-6 bottom left">
-      <v-btn color="primary" elevation="0" large block>
+      <v-btn @click="goForward()" color="primary" elevation="0" large block>
         Next <v-icon small>mdi-chevron-right</v-icon>
       </v-btn>
     </div>
@@ -23,12 +42,13 @@
 </template>
 
 <script>
-import ProgressIndicator from "@/components/Account/ProgressIndicator";
+import ProgressIndicator from "@/components/Account/Setup/  ProgressIndicator";
 export default {
   name: "AccountSetup",
   components: { ProgressIndicator },
   data() {
     return {
+      exitDialog: false,
       transition: "slide-push",
       userInfo: {
         firstName: "",
@@ -43,6 +63,12 @@ export default {
       return this.$route.meta.step;
     },
   },
+  methods: {
+    goBack() {
+      if (this.currentStep > 1) return this.$router.go(-1);
+      else this.exitDialog = true;
+    },
+  },
   provide() {
     return {
       userInfo: this.userInfo,
@@ -54,8 +80,10 @@ export default {
     },
   },
   beforeRouteLeave(to, from, next) {
-    alert("x");
-    next(false);
+    if (this.currentStep === 1) {
+      this.exitDialog = true;
+      return next(false);
+    }
   },
 };
 </script>
