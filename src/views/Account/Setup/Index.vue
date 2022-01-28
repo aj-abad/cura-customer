@@ -11,7 +11,7 @@
     </v-sheet>
     <div class="position-absolute w-100 pa-6 bottom left">
       <v-btn color="primary" elevation="0" large block>
-        Next <v-icon right>mdi-chevron-right</v-icon>
+        Next <v-icon small>mdi-chevron-right</v-icon>
       </v-btn>
     </div>
   </div>
@@ -42,6 +42,6 @@ export default {
 .account-setup-view {
   height: 100%;
   overflow-y: auto;
-  padding-bottom: 64px !important;
+  padding-bottom: 72px !important;
 }
 </style>
