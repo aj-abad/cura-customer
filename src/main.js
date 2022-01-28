@@ -10,6 +10,7 @@ import './plugins/ismobile'
 import './plugins/leaflet'
 import './plugins/formatprice'
 import './plugins/day'
+import "./plugins/v-mask"
 import './assets/dynamictransitions'
 import 'croppie/croppie.css'
 import './assets/main.css'
