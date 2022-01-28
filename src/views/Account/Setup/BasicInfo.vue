@@ -1,10 +1,10 @@
 <template>
-  <div class="pa-6">
+  <div class="pa-6 h-100 w-100">
     <div class="mb-6">
       <div class="d-flex align-center">
         <h2>Basic information</h2>
         <small class="ml-auto font-weight-semibold grey--text text--darken-2">
-          Step 1 of 3
+          Step {{ currentStep }} of {{ steps }}
         </small>
       </div>
       <h3 class="font-weight-medium grey--text text--darken-2">
@@ -34,6 +34,10 @@
 <script>
 export default {
   name: "BasicInfo",
+  props: {
+    steps: Number,
+    currentStep: Number,
+  },
   inject: ["userInfo"],
 };
 </script>
