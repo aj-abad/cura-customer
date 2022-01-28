@@ -18,8 +18,9 @@
       hide-details
       label="Mobile number"
       class="mb-4"
-      v-model.trim="userInfo.mobile"
+      v-model.trim="mobile"
       prefix="+63"
+      v-mask="'### ### ####'"
     />
     <div class="mt-auto mb-2">
       <v-btn plain elevation="0" large block> Maybe later </v-btn>
@@ -30,9 +31,19 @@
 <script>
 export default {
   name: "Mobile",
+  data() {
+    return {
+      mobile: "",
+    };
+  },
   props: {
     steps: Number,
     currentStep: Number,
+  },
+  watch: {
+    mobile() {
+      return (this.userInfo.mobile = this.mobile.replaceAll(" ", ""));
+    },
   },
   inject: ["userInfo"],
 };
