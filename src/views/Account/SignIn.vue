@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="dialog">
+    <v-dialog v-model="resetDialog">
       <v-sheet class="rounded-lg text-center pa-4">
         <h3 class="mb-2">Lost your password?</h3>
         <p class="mb-4">
@@ -9,14 +9,14 @@
         <v-btn
           large
           elevation="0"
-          @click="goBack()"
+          @click="sendResetCode()"
           block
           color="primary"
           class="mb-2"
         >
           Send password reset code
         </v-btn>
-        <v-btn @click="dialog = false" block plain large elevation="0">
+        <v-btn @click="resetDialog = false" block plain large elevation="0">
           Cancel
         </v-btn>
       </v-sheet>
@@ -56,7 +56,9 @@
         />
         <p>
           <!-- TODO implement forgot password -->
-          <a href="#" @click.prevent="dialog = true"> Lost your password? </a>
+          <a href="#" @click.prevent="resetDialog = true">
+            Lost your password?
+          </a>
         </p>
         <v-btn
           type="submit"
@@ -90,7 +92,7 @@ export default {
   data() {
     return {
       focusElement: "#password-input",
-      dialog: false,
+      resetDialog: false,
       email: this.$route.query.email ?? "",
       showPassword: false,
       password: "",
@@ -118,6 +120,9 @@ export default {
           this.$emit("snackbarMessage", err?.response?.data?.errorMessage)
         )
         .finally(() => (this.isLoading = false));
+    },
+    sendResetCode() {
+      //TODO implement
     },
   },
 };
