@@ -1,6 +1,6 @@
 <template>
   <v-btn @click="goBack()" plain>
-    <v-icon small>mdi-chevron-left</v-icon> Go back
+    <v-icon small>mdi-chevron-left</v-icon> Back
   </v-btn>
 </template>
 
