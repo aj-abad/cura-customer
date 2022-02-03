@@ -12,7 +12,7 @@ import './plugins/formatprice'
 import './plugins/day'
 import "./plugins/v-mask"
 import './assets/dynamictransitions'
-import 'croppie/croppie.css'
+import 'croppie-constrained/croppie.css'
 import './assets/main.css'
 import './assets/overrides.css'
 import './assets/transitions.css'
