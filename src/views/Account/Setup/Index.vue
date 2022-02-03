@@ -63,6 +63,7 @@ export default {
       userInfo: {
         firstName: "",
         lastName: "",
+        birthDate: "",
         mobile: "",
         profilePhoto: "",
       },
