@@ -20,49 +20,7 @@
   font-weight: bold !important;
 }
 
-.v-chip {
-  font-weight: 600;
-}
-
-.v-input--reverse .v-input__slot {
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-}
-
-.v-input--reverse .theme--light.v-label {
+.v-picker.light-title .v-picker__title {
+  background-color: var(--v-bglight-base) !important;
   color: rgba(0, 0, 0, 0.87);
-  font-size: 1.17em;
-}
-.v-input--expand .v-input__slot {
-  justify-content: space-between;
-}
-
-.v-input--expand .v-input__slot .v-label {
-  display: block;
-  flex: 1;
-}
-
-.v-chip-group .v-slide-group__content {
-  padding: 0 !important;
-}
-
-.v-text-field--outlined .v-text-field__prefix {
-  font-weight: 600;
-}
-
-.v-chip--clickable:active {
-  box-shadow: none !important;
-}
-
-.v-tab {
-  letter-spacing: 0 !important;
-  font-weight: normal !important;
-}
-
-.theme--light.v-tabs > .v-tabs-bar .v-tab:not(.v-tab--active) {
-  color: (0, 0, 0, 0.54);
-}
-
-.v-tab--active.v-tab {
-  font-weight: 600 !important;
 }
