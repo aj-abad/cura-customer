@@ -36,7 +36,7 @@ export default {
 
 <style lang="stylus" scoped>
 .step {
-  height: 20px;
+  height: 16px;
   width: @height;
   background: var(--v-bglight-darken2);
   border-radius: 100%;
