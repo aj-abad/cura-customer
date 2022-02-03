@@ -22,5 +22,5 @@
 
 .v-picker.light-title .v-picker__title {
   background-color: var(--v-bglight-base) !important;
-  color: rgba(0, 0, 0, 0.87);
+  color: var(--v-primary-darken2)
 }
