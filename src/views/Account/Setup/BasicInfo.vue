@@ -43,7 +43,10 @@
 
 <script>
 import focusElementOnMount from "@/mixins/focuselement";
-import BirthDatePicker from "@/components/Account/Setup/BirthDatePicker.vue";
+import BirthDatePicker from "@/components/Account/Setup/BirthDatePicker";
+import { validateName } from "cura-validation-utils";
+import multiStep from "@/mixins/multistepform";
+
 export default {
   name: "BasicInfo",
   components: {
@@ -56,26 +59,32 @@ export default {
       picker: null,
     };
   },
-  mixins: [focusElementOnMount],
   methods: {
     showDialog() {
       document.activeElement.blur();
       this.$nextTick(() => (this.dialog = true));
     },
-    setBirthDate(date){
+    setBirthDate(date) {
       this.userInfo.birthDate = date;
       this.dialog = false;
     },
   },
-  computed:{
-    formattedDate(){
-      return this.userInfo.birthDate ? this.$date(this.userInfo.birthDate).format("MMMM D, YYYY") : "";
-    }
+  computed: {
+    formattedDate() {
+      return this.userInfo.birthDate
+        ? this.$date(this.userInfo.birthDate).format("MMMM D, YYYY")
+        : "";
+    },
+    canGoForward() {
+      const { firstName, lastName, birthDate } = this.userInfo;
+      return validateName(`${firstName} ${lastName}`) && !!birthDate;
+    },
   },
   props: {
     steps: Number,
     currentStep: Number,
   },
   inject: ["userInfo"],
+  mixins: [focusElementOnMount, multiStep],
 };
 </script>
