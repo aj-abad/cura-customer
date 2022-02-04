@@ -30,6 +30,7 @@
           label="Password"
           hide-details
           class="mb-0"
+          v-focus="320"
           id="password-input"
           autocomplete="off"
         />
@@ -73,14 +74,11 @@
 </template>
 
 <script>
-import focusElement from "@/mixins/focuselement";
 const owasp = require("owasp-password-strength-test");
 export default {
   name: "SignUp",
-  mixins: [focusElement],
   data() {
     return {
-      focusElement: "#password-input",
       email: this.$route.query.email ?? "",
       showPassword: true,
       password: "",

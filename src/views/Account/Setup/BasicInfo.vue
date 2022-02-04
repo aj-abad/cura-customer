@@ -18,6 +18,7 @@
       class="mb-4"
       v-model.trim="userInfo.firstName"
       id="first-name-input"
+      v-focus="320"
     />
     <v-text-field
       dense
@@ -42,7 +43,6 @@
 </template>
 
 <script>
-import focusElementOnMount from "@/mixins/focuselement";
 import BirthDatePicker from "@/components/Account/Setup/BirthDatePicker";
 import { validateName } from "cura-validation-utils";
 import multiStep from "@/mixins/multistepform";
@@ -54,7 +54,6 @@ export default {
   },
   data() {
     return {
-      focusElement: "#first-name-input",
       dialog: false,
       picker: null,
     };
@@ -85,6 +84,6 @@ export default {
     currentStep: Number,
   },
   inject: ["userInfo"],
-  mixins: [focusElementOnMount, multiStep],
+  mixins: [multiStep],
 };
 </script>

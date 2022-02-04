@@ -44,7 +44,7 @@
           :type="showPassword ? 'text' : 'password'"
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="showPassword = !showPassword"
-          :aria-label:append="showPassword ? 'Hide password' : 'Show password'"
+          v-focus="320"
           outlined
           rounded
           dense
@@ -85,13 +85,10 @@
 </template>
 
 <script>
-import focusElement from "@/mixins/focuselement";
 export default {
   name: "SignUp",
-  mixins: [focusElement],
   data() {
     return {
-      focusElement: "#password-input",
       resetDialog: false,
       email: this.$route.query.email ?? "",
       showPassword: false,

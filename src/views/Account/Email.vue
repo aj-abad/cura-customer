@@ -9,6 +9,7 @@
       <form @submit.prevent="submitEmail()" class="mt-6">
         <v-text-field
           id="email-input"
+          v-focus="320"
           v-model.trim="email"
           outlined
           rounded
@@ -41,14 +42,11 @@
 </template>
 
 <script>
-import focusElement from "@/mixins/focuselement";
 const validator = require("email-validator");
 export default {
   name: "Email",
-  mixins: [focusElement],
   data() {
     return {
-      focusElement: "#email-input",
       email: sessionStorage.getItem("email") ?? "",
       isLoading: false,
       isDone: false,
