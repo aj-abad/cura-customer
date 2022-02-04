@@ -125,15 +125,3 @@
   opacity: 1;
 }
 
-.hide-change-enter-active,
-.hide-change-leave-active,
-.hide-change-enter-active,
-.hide-change-leave-active {
-  transition: 1s;
-  position: absolute;
-}
-
-.hide-change-enter-active {
-  background: white;
-  z-index: 10;
-}
