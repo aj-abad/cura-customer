@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="rounded-lg overflow-hidden">
-    <v-date-picker class="light-title" min="1900-01-01" :title-date-format="dateFormat" :max="maximumDate" v-model="date" color="primary" />
+    <v-date-picker full-width class="light-title" min="1900-01-01" :title-date-format="dateFormat" :max="maximumDate" v-model="date" color="primary" />
     <div class="pa-4">
       <v-btn block large elevation="0" color="primary" @click="$emit('update', date)"> Confirm </v-btn>
     </div>
