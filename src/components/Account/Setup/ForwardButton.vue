@@ -16,16 +16,7 @@ export default {
   props: {
     currentStep: Number,
     userInfo: Object,
-  },
-  computed: {
-    canGoForward() {
-      if (this.currentStep === 1) {
-        const { firstName, lastName } = this.userInfo;
-        console.log(firstName, lastName, !!firstName && !!lastName);
-        return !!firstName && !!lastName;
-      }
-      return false;
-    },
+    canGoForward: Boolean
   },
   methods: {
     goForward() {
