@@ -33,6 +33,7 @@
       <transition :name="transition">
         <router-view
           class="account-setup-view"
+          @canforward="canGoForward = $event"
           :currentStep="currentStep"
           :steps="steps"
         />
@@ -42,7 +43,7 @@
       <forward-button
         :userInfo="userInfo"
         :currentStep="currentStep"
-        :steps="steps"
+        :canGoForward="canGoForward"
       />
     </div>
   </div>
@@ -60,6 +61,7 @@ export default {
       exitDialog: false,
       isLocked: true,
       transition: "slide-push",
+      canGoForward: false,
       userInfo: {
         firstName: "",
         lastName: "",
