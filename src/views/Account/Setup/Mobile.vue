@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import multiStep from "@/mixins/multistepform"
+import {validateMobile} from "cura-validation-utils"
 export default {
   name: "Mobile",
   data() {
@@ -48,11 +50,17 @@ export default {
       this.$router.push(nextStep);
     },
   },
+  computed:{
+    canGoForward(){
+      return validateMobile(this.userInfo.mobile);
+    }
+  },
   watch: {
     mobile() {
       return (this.userInfo.mobile = this.mobile.replaceAll(" ", ""));
     },
   },
   inject: ["userInfo"],
+  mixins: [multiStep],
 };
 </script>
