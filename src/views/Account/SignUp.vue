@@ -75,6 +75,15 @@
 
 <script>
 const owasp = require("owasp-password-strength-test");
+owasp.config({
+  allowPassphrases: true,
+  maxLength: 128,
+  minLength: 6,
+  minPhraseLength: 20,
+  minOptionalTestsToPass: 4,
+});
+owasp.tests.required = [];
+owasp.tests.required.push(password=>password.length < 6 || password.length > 128 ? "Password must be between 6 and 128 characters" : null);
 export default {
   name: "SignUp",
   data() {
