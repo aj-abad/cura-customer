@@ -11,6 +11,7 @@ import './plugins/leaflet'
 import './plugins/formatprice'
 import './plugins/day'
 import "./plugins/v-mask"
+import "./directives/focus"
 import './assets/dynamictransitions'
 import 'croppie-constrained/croppie.css'
 import './sass/main.sass'
