@@ -39,7 +39,7 @@
         />
       </transition>
     </v-sheet>
-    <div class="position-absolute w-100 pa-6 bottom left">
+    <div class="position-absolute w-100 pa-6 pt-0 bottom left">
       <forward-button
         :userInfo="userInfo"
         :currentStep="currentStep"
