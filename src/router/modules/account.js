@@ -6,6 +6,7 @@ import WelcomeNewUser from "../../views/Account/WelcomeNewUser";
 import AccountSetup from "../../views/Account/Setup/Index";
 import BasicInfo from "../../views/Account/Setup/BasicInfo";
 import Mobile from "../../views/Account/Setup/Mobile"
+import ProfilePhoto from "../../views/Account/Setup/ProfilePhoto";
 
 const routes = [
   {
@@ -73,6 +74,15 @@ const routes = [
       meta: {
         depth: 6,
         step: 2,
+      }
+    },
+    {
+      path: 'profilephoto',
+      name: 'ProfilePhoto',
+      component: ProfilePhoto,
+      meta: {
+        depth: 7,
+        step: 3,
       }
     }
     ],
