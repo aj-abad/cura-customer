@@ -139,6 +139,7 @@ export default {
       this.dialog = false;
       next(false);
     }
+     return next(true);
   },
 };
 </script>
