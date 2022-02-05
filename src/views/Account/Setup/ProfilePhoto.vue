@@ -105,14 +105,19 @@ export default {
       this.dialog = true;
       this.animating = true;
       this.imageURL = URL.createObjectURL(this.imgFile);
-      const viewportSize = window.innerWidth > 300 ? 300 : window.innerWidth - 64;
+      const viewportSize =
+        window.innerWidth > 300 ? 300 : window.innerWidth - 64;
       setTimeout(() => {
         this.animating = false;
         this.croppie = new Croppie(this.$refs.croppieContainer, {
           showZoomer: false,
           maxZoom: 2.0,
           enforceBoundary: true,
-          viewport: { width: viewportSize, height: viewportSize, type: "circle" },
+          viewport: {
+            width: viewportSize,
+            height: viewportSize,
+            type: "circle",
+          },
         });
         this.croppie.bind({
           url: this.imageURL,
@@ -128,6 +133,12 @@ export default {
       )?.map((x) => parseFloat(x));
       console.log(result);
     },
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.dialog) {
+      this.dialog = false;
+      next(false);
+    }
   },
 };
 </script>
