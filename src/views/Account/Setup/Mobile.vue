@@ -44,7 +44,7 @@ export default {
     skipStep() {
       const nextStep = this.$router.options.routes
         .find((route) => route.name === "AccountSetup")
-        .children.find((route) => route.step === this.currentStep + 1);
+        .children.find((route) => route.meta.step === this.currentStep + 1);
         
       this.userInfo.mobile = "";
       this.$router.push(nextStep);
