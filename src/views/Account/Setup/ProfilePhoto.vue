@@ -91,7 +91,9 @@ export default {
       this.$refs.imgInput.click();
     },
     setImgFile() {
-      this.imgFile = this.$refs.imgInput.files[0];
+      const file = this.$refs.imgInput.files[0];
+      if (!file) return null;
+      this.imgFile = file;
       return this.openCroppie();
     },
     destroyCroppie() {
@@ -103,13 +105,14 @@ export default {
       this.dialog = true;
       this.animating = true;
       this.imageURL = URL.createObjectURL(this.imgFile);
+      const viewportSize = window.innerWidth > 300 ? 300 : window.innerWidth - 64;
       setTimeout(() => {
         this.animating = false;
         this.croppie = new Croppie(this.$refs.croppieContainer, {
           showZoomer: false,
           maxZoom: 2.0,
           enforceBoundary: true,
-          viewport: { width: 300, height: 300, type: "circle" },
+          viewport: { width: viewportSize, height: viewportSize, type: "circle" },
         });
         this.croppie.bind({
           url: this.imageURL,
@@ -117,16 +120,14 @@ export default {
         });
       }, 310);
     },
-    async confirmBounds(){
-      const result = (await this.croppie.result({
-        type: "points",
-      }))?.map(x=>parseFloat(x))
-      console.log(result)
-      
-      // this.croppie.result({ type: "points" }).then((result) => {
-      //   console.log(result)
-      // });
-    }
+    async confirmBounds() {
+      const result = (
+        await this.croppie.result({
+          type: "points",
+        })
+      )?.map((x) => parseFloat(x));
+      console.log(result);
+    },
   },
 };
 </script>
