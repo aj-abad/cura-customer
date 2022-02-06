@@ -47,19 +47,7 @@
     </div>
     <div class="profile-photo-btn-container pa-12">
       <div class="h-100 w-100 position-relative">
-        <div
-          v-if="userInfo.profilePhoto"
-          class="profile-photo-preview-container"
-          style="transform-origin: 0 0"
-          :style="profilePhotoPreviewContainer"
-        >
-          <img
-          class="position-absolute"
-            :src="userInfo.profilePhoto.url"
-            alt="Profile photo preview"
-            :style="profilePhotoPreview"
-          />
-        </div>
+        <profile-photo-preview />
         <v-btn
           @click="openImageInput"
           aria-label="Edit profile photo"
@@ -93,9 +81,12 @@
 
 <script>
 import Croppie from "croppie-constrained";
-
+import ProfilePhotoPreview from "@/components/Account/Setup/ProfilePhotoPreview";
 export default {
   name: "ProfilePhoto",
+  components: {
+    ProfilePhotoPreview,
+  },
   props: {
     steps: Number,
     currentStep: Number,
@@ -188,23 +179,6 @@ export default {
     }
     return next(true);
   },
-  computed: {
-    profilePhotoPreviewContainer() {
-      const { bounds } = this.userInfo.profilePhoto;
-      const [ x1, y1, x2, y2 ] = bounds;
-      return {
-        width: `${x2 - x1}px`,
-        height: `${y2 - y1}px`,
-      };
-    },
-    profilePhotoPreview() {
-      const { bounds } = this.userInfo.profilePhoto;
-      return {
-        left: `${-bounds[0]}px`,
-        top: `${-bounds[1]}px`,
-      }
-    },
-  },
   inject: ["userInfo"],
 };
 </script>
@@ -214,14 +188,5 @@ export default {
   width: 100% !important;
   aspect-ratio: 1 / 1 !important;
   overflow: hidden;
-}
-
-.profile-photo-preview-container {
-  height: 100%;
-  overflow: hidden;
-  width: @height;
-  position: absolute;
-  top: 0
-  left: 0
 }
 </style>
