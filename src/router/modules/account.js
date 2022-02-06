@@ -7,6 +7,7 @@ import AccountSetup from "../../views/Account/Setup/Index";
 import BasicInfo from "../../views/Account/Setup/BasicInfo";
 import Mobile from "../../views/Account/Setup/Mobile"
 import ProfilePhoto from "../../views/Account/Setup/ProfilePhoto";
+import Confirmation from "../../views/Account/Setup/Confirmation";
 
 const routes = [
   {
@@ -83,6 +84,15 @@ const routes = [
       meta: {
         depth: 7,
         step: 3,
+      }
+    },
+    {
+      path: 'confirmation',
+      name: 'Confirmation',
+      component: Confirmation,
+      meta: {
+        depth: 8,
+        step: 4,
       }
     }
     ],
