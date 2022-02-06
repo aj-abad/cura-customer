@@ -7,7 +7,7 @@
         color="transparent"
         elevation="0"
       >
-        <v-btn @click="dialog = false" icon>
+        <v-btn @click="closeCroppie()" icon>
           <v-icon color="white">mdi-close</v-icon>
         </v-btn>
         <h3 class="white--text font-weight-semibold">Move and scale</h3>
@@ -39,21 +39,44 @@
         </div>
       </v-sheet>
     </v-dialog>
-    <div class="mb-6">
+    <div>
       <small class="ml-auto font-weight-semibold grey--text text--darken-2">
         Step {{ currentStep }} of {{ steps }}
       </small>
       <h2>Profile photo</h2>
     </div>
-    <div class="profile-photo-btn-container pa-8">
-      <v-btn
-        @click="openImageInput"
-        aria-label="Edit profile photo"
-        plain
-        class="grey lighten-3 pa-0 h-100 w-100"
-      >
-        <v-icon size="48" style="opacity: 0.5"> mdi-camera </v-icon>
-      </v-btn>
+    <div class="profile-photo-btn-container pa-12">
+      <div class="h-100 w-100 position-relative">
+        <div
+          v-if="userInfo.profilePhoto"
+          class="profile-photo-preview-container"
+          style="transform-origin: 0 0"
+          :style="profilePhotoPreviewContainer"
+        >
+          <img
+          class="position-absolute"
+            :src="userInfo.profilePhoto.url"
+            alt="Profile photo preview"
+            :style="profilePhotoPreview"
+          />
+        </div>
+        <v-btn
+          @click="openImageInput"
+          aria-label="Edit profile photo"
+          plain
+          class="
+            grey
+            lighten-3
+            pa-0
+            h-100
+            w-100
+            position-relative
+            overflow-hidden
+          "
+        >
+          <v-icon size="48" style="opacity: 0.5"> mdi-camera </v-icon>
+        </v-btn>
+      </div>
       <input
         @change="setImgFile"
         ref="imgInput"
@@ -91,8 +114,14 @@ export default {
       this.$refs.imgInput.click();
     },
     setImgFile() {
+      if (this.animating) return null;
       const file = this.$refs.imgInput.files[0];
       if (!file) return null;
+      if (file.size > 1000 * 5000)
+        return this.$parent.$parent.$emit(
+          "snackbarMessage",
+          "Please pick an image 5MB or smaller."
+        );
       this.imgFile = file;
       return this.openCroppie();
     },
@@ -102,9 +131,11 @@ export default {
     },
     openCroppie() {
       this.destroyCroppie();
+      // URL.revokeObjectURL(this.imageURL);
+      this.imageURL = URL.createObjectURL(this.imgFile);
+      this.$refs.imgInput.value = null;
       this.dialog = true;
       this.animating = true;
-      this.imageURL = URL.createObjectURL(this.imgFile);
       const viewportSize =
         window.innerWidth > 300 ? 300 : window.innerWidth - 64;
       setTimeout(() => {
@@ -125,22 +156,56 @@ export default {
         });
       }, 310);
     },
+    closeCroppie() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.destroyCroppie();
+      }, 310);
+    },
     async confirmBounds() {
-      const result = (
+      const bounds = (
         await this.croppie.result({
           type: "points",
         })
-      )?.map((x) => parseFloat(x));
-      console.log(result);
+      ).map((point) => parseFloat(point));
+
+      const htmlReult = await this.croppie.result({
+        type: "html",
+      });
+      console.log(htmlReult);
+      console.log(bounds);
+      console.log(this.croppie);
+      this.userInfo.profilePhoto = {
+        url: this.imageURL,
+        bounds,
+      };
     },
   },
   beforeRouteLeave(to, from, next) {
     if (this.dialog) {
       this.dialog = false;
-      next(false);
+      return next(false);
     }
-     return next(true);
+    return next(true);
   },
+  computed: {
+    profilePhotoPreviewContainer() {
+      const { bounds } = this.userInfo.profilePhoto;
+      const [ x1, y1, x2, y2 ] = bounds;
+      return {
+        width: `${x2 - x1}px`,
+        height: `${y2 - y1}px`,
+      };
+    },
+    profilePhotoPreview() {
+      const { bounds } = this.userInfo.profilePhoto;
+      return {
+        left: `${-bounds[0]}px`,
+        top: `${-bounds[1]}px`,
+      }
+    },
+  },
+  inject: ["userInfo"],
 };
 </script>
 
@@ -149,5 +214,14 @@ export default {
   width: 100% !important;
   aspect-ratio: 1 / 1 !important;
   overflow: hidden;
+}
+
+.profile-photo-preview-container {
+  height: 100%;
+  overflow: hidden;
+  width: @height;
+  position: absolute;
+  top: 0
+  left: 0
 }
 </style>
