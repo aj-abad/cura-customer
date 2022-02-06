@@ -47,21 +47,21 @@
     </div>
     <div class="profile-photo-btn-container pa-12">
       <div class="h-100 w-100 position-relative">
-        <profile-photo-preview />
+        <profile-photo-preview :profilePhotoPreview="profilePhotoPreview" />
         <v-btn
           @click="openImageInput"
           aria-label="Edit profile photo"
           plain
           class="pa-0 h-100 w-100 position-relative overflow-hidden"
           :style="`background: rgba(0,0,0, ${
-            userInfo.profilePhoto ? 0.13 : 0.13
+            profilePhotoPreview ? 0.13 : 0.13
           })`"
         >
           <v-icon
-            :color="userInfo.profilePhoto ? 'white' : 'black'"
+            :color="profilePhotoPreview ? 'white' : 'black'"
             size="48"
             style="transform: translateX(-2px) translateY(-4px)"
-            :style="`opacity: ${userInfo.profilePhoto ? 1 : 0.75}`"
+            :style="`opacity: ${profilePhotoPreview ? 1 : 0.75}`"
           >
             mdi-camera-plus
           </v-icon>
@@ -102,6 +102,7 @@ export default {
       dialog: false,
       animating: false,
       croppie: null,
+      profilePhotoPreview: null,
     };
   },
   methods: {
@@ -110,7 +111,6 @@ export default {
         .find((route) => route.name === "AccountSetup")
         .children.find((route) => route.meta.step === this.currentStep + 1);
 
-      setTimeout(() => (this.userInfo.profilePhoto = null), 320);
       nextStep ? this.$router.push(nextStep) : null;
     },
     openImageInput() {
@@ -171,7 +171,7 @@ export default {
           type: "points",
         })
       ).map((point) => parseFloat(point));
-      this.userInfo.profilePhoto = {
+      this.profilePhotoPreview = {
         url: this.imageURL,
         bounds,
       };

@@ -10,7 +10,7 @@
       class="position-absolute"
       :src="url ?? ''"
       alt="Profile photo preview"
-      :style="profilePhotoPreview"
+      :style="profilePhotoPreviewStyle"
     />
   </div>
 </template>
@@ -18,29 +18,31 @@
 <script>
 export default {
   name: "ProfilePhotoPreview",
-  inject: ["userInfo"],
   data() {
     return {
       resizeObserver: null,
     };
   },
+  props:{
+    profilePhotoPreview: Object
+  },
   computed: {
     url() {
-      return this.userInfo.profilePhoto?.url;
+      return this.profilePhotoPreview?.url;
     },
     profilePhotoPreviewContainer() {
-      if (!this.userInfo.profilePhoto) return null;
-      const { bounds } = this.userInfo.profilePhoto;
+      if (!this.profilePhotoPreview) return null;
+      const { bounds } = this.profilePhotoPreview;
       const [x1, y1, x2, y2] = bounds;
       return {
         width: `${x2 - x1}px`,
         height: `${y2 - y1}px`,
       };
     },
-    profilePhotoPreview() {
-      if (!this.userInfo.profilePhoto) return null;
+    profilePhotoPreviewStyle() {
+      if (!this.profilePhotoPreview) return null;
 
-      const { bounds } = this.userInfo.profilePhoto;
+      const { bounds } = this.profilePhotoPreview;
       return {
         left: `${-bounds[0]}px`,
         top: `${-bounds[1]}px`,
