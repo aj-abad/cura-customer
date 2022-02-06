@@ -29,7 +29,7 @@ router.beforeEach((to, from, next) => {
   const { userStatus } = store.getters.getUser
   if (to?.meta.requireGuest && store.getters.isLoggedIn)
     return next(false)
-  if (to.meta.userStatus && !to.meta.userStatusincludes(userStatus))
+  if (to.meta.userStatus && !to.meta.userStatus.includes(userStatus))
     return next(false)
   return next()
 })
