@@ -1,13 +1,14 @@
 <template>
   <div
-    v-if="userInfo.profilePhoto"
     class="profile-photo-preview-container"
+    :class="{ 'd-none': !url }"
     style="transform-origin: 0 0"
     :style="profilePhotoPreviewContainer"
+    ref="profilePhotoPreviewContainer"
   >
     <img
       class="position-absolute"
-      :src="userInfo.profilePhoto.url"
+      :src="url ?? ''"
       alt="Profile photo preview"
       :style="profilePhotoPreview"
     />
@@ -18,8 +19,17 @@
 export default {
   name: "ProfilePhotoPreview",
   inject: ["userInfo"],
+  data() {
+    return {
+      resizeObserver: null,
+    };
+  },
   computed: {
+    url() {
+      return this.userInfo.profilePhoto?.url;
+    },
     profilePhotoPreviewContainer() {
+      if (!this.userInfo.profilePhoto) return null;
       const { bounds } = this.userInfo.profilePhoto;
       const [x1, y1, x2, y2] = bounds;
       return {
@@ -28,6 +38,8 @@ export default {
       };
     },
     profilePhotoPreview() {
+      if (!this.userInfo.profilePhoto) return null;
+
       const { bounds } = this.userInfo.profilePhoto;
       return {
         left: `${-bounds[0]}px`,
@@ -35,6 +47,23 @@ export default {
       };
     },
   },
+  mounted() {
+    this.createResizeObserver();
+  },
+  methods: {
+    createResizeObserver() {
+      this.resizeObserver = new ResizeObserver(() => {
+        const el = this.$refs.profilePhotoPreviewContainer
+        const {clientWidth: parentWidth} = this.$refs.profilePhotoPreviewContainer.parentElement
+        el.style.transform = `scale(${parentWidth / el.clientWidth})`
+      });
+      this.resizeObserver.observe(this.$refs.profilePhotoPreviewContainer);
+      this.resizeObserver.observe(this.$refs.profilePhotoPreviewContainer.parentElement);
+    },
+  },
+  beforeDestroy(){
+    this.resizeObserver.disconnect()
+  }
 };
 </script>
 

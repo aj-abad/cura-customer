@@ -52,17 +52,18 @@
           @click="openImageInput"
           aria-label="Edit profile photo"
           plain
-          class="
-            grey
-            lighten-3
-            pa-0
-            h-100
-            w-100
-            position-relative
-            overflow-hidden
-          "
+          class="pa-0 h-100 w-100 position-relative overflow-hidden"
+          :style="`background: rgba(0,0,0, ${
+            userInfo.profilePhoto ? 0.13 : 0.13
+          })`"
         >
-          <v-icon size="48" style="opacity: 0.5"> mdi-camera </v-icon>
+          <v-icon
+            :color="userInfo.profilePhoto ? 'white' : 'black'"
+            size="48"
+            :style="`opacity: ${userInfo.profilePhoto ? 1 : 0.75}`"
+          >
+            mdi-camera-plus
+          </v-icon>
         </v-btn>
       </div>
       <input
@@ -74,7 +75,9 @@
       />
     </div>
     <div class="mt-auto mb-2">
-      <v-btn plain elevation="0" large block> Maybe later </v-btn>
+      <v-btn plain elevation="0" large block @click="skipStep()">
+        Maybe later
+      </v-btn>
     </div>
   </div>
 </template>
@@ -101,6 +104,14 @@ export default {
     };
   },
   methods: {
+    skipStep() {
+      const nextStep = this.$router.options.routes
+        .find((route) => route.name === "AccountSetup")
+        .children.find((route) => route.meta.step === this.currentStep + 1);
+
+      setTimeout(() => (this.userInfo.profilePhoto = null), 320);
+      nextStep ? this.$router.push(nextStep) : null;
+    },
     openImageInput() {
       this.$refs.imgInput.click();
     },
@@ -114,6 +125,7 @@ export default {
           "Please pick an image 5MB or smaller."
         );
       this.imgFile = file;
+      URL.revokeObjectURL(this.imageURL);
       return this.openCroppie();
     },
     destroyCroppie() {
@@ -122,7 +134,6 @@ export default {
     },
     openCroppie() {
       this.destroyCroppie();
-      // URL.revokeObjectURL(this.imageURL);
       this.imageURL = URL.createObjectURL(this.imgFile);
       this.$refs.imgInput.value = null;
       this.dialog = true;
@@ -159,17 +170,11 @@ export default {
           type: "points",
         })
       ).map((point) => parseFloat(point));
-
-      const htmlReult = await this.croppie.result({
-        type: "html",
-      });
-      console.log(htmlReult);
-      console.log(bounds);
-      console.log(this.croppie);
       this.userInfo.profilePhoto = {
         url: this.imageURL,
         bounds,
       };
+      this.closeCroppie();
     },
   },
   beforeRouteLeave(to, from, next) {
@@ -188,5 +193,7 @@ export default {
   width: 100% !important;
   aspect-ratio: 1 / 1 !important;
   overflow: hidden;
+  max-width: 476px;
+  margin: 0 auto;
 }
 </style>
