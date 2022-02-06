@@ -15,7 +15,9 @@
         label="Mobile number"
         v-model.trim="mobile"
         prefix="+63"
+        inputmode="numeric"
         v-mask="'### ### ####'"
+          pattern="[0-9]{1}"
       />
     </div>
     <div class="mt-auto mb-2">
