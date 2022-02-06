@@ -60,6 +60,7 @@
           <v-icon
             :color="userInfo.profilePhoto ? 'white' : 'black'"
             size="48"
+            style="transform: translateX(-2px) translateY(-4px)"
             :style="`opacity: ${userInfo.profilePhoto ? 1 : 0.75}`"
           >
             mdi-camera-plus
