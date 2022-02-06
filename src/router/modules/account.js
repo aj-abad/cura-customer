@@ -51,7 +51,7 @@ const routes = [
     component: WelcomeNewUser,
     meta: {
       depth: 4,
-      userStatus: 2
+      userStatus: [2]
     }
   },
   {
