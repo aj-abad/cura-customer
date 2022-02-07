@@ -86,6 +86,7 @@
 <script>
 import Croppie from "croppie-constrained";
 import ProfilePhotoPreview from "@/components/Account/Setup/ProfilePhotoPreview";
+import multiStep from "@/mixins/multistepform";
 export default {
   name: "ProfilePhoto",
   components: {
@@ -102,8 +103,13 @@ export default {
       dialog: false,
       animating: false,
       croppie: null,
-      profilePhotoPreview: null,
+      profilePhotoPreview: this.userInfo.profilePhoto ? Object.assign({}, this.userInfo.profilePhoto) : null,
     };
+  },
+  computed: {
+    canGoForward() {
+      return !!this.profilePhotoPreview;
+    },
   },
   methods: {
     skipStep() {
@@ -186,6 +192,7 @@ export default {
     return next(true);
   },
   inject: ["userInfo"],
+  mixins: [multiStep],
 };
 </script>
 
