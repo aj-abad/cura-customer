@@ -34,6 +34,7 @@
         <router-view
           class="account-setup-view"
           @canforward="canGoForward = $event"
+          @forward="goForward()"
           :currentStep="currentStep"
           :steps="steps"
         />
@@ -73,6 +74,9 @@ export default {
         mobile: "",
         profilePhoto: null,
       },
+      meta:{
+        mobileDialog: false,
+      }
     };
   },
   computed: {
@@ -92,6 +96,7 @@ export default {
   },
   methods: {
     goForward() {
+      if (!this.canGoForward) return;
       const nextStep = this.$router.options.routes
         .find((route) => route.name === "AccountSetup")
         .children.find((route) => route.meta.step === this.currentStep + 1);
