@@ -40,11 +40,16 @@
       </transition>
     </v-sheet>
     <div class="position-absolute w-100 pa-6 pt-0 bottom left">
-      <forward-button
-        :userInfo="userInfo"
-        :currentStep="currentStep"
-        :canGoForward="canGoForward"
-      />
+      <v-btn
+        :disabled="!canGoForward"
+        @click="goForward()"
+        color="primary"
+        elevation="0"
+        large
+        block
+      >
+        Next <v-icon small>mdi-chevron-right</v-icon>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -52,10 +57,9 @@
 <script>
 import ProgressIndicator from "@/components/Account/Setup/ProgressIndicator";
 import BackButton from "@/components/Account/Setup/BackButton";
-import ForwardButton from "@/components/Account/Setup/ForwardButton";
 export default {
   name: "AccountSetup",
-  components: { ProgressIndicator, BackButton, ForwardButton },
+  components: { ProgressIndicator, BackButton },
   data() {
     return {
       exitDialog: false,
@@ -67,7 +71,7 @@ export default {
         lastName: "",
         birthDate: "",
         mobile: "",
-        profilePhoto: "",
+        profilePhoto: null,
       },
     };
   },
@@ -87,6 +91,12 @@ export default {
     };
   },
   methods: {
+    goForward() {
+      const nextStep = this.$router.options.routes
+        .find((route) => route.name === "AccountSetup")
+        .children.find((route) => route.meta.step === this.currentStep + 1);
+      if (nextStep) return this.$router.push(nextStep.path);
+    },
     signOut() {
       this.isLocked = false;
       this.$store.dispatch("signOut");
