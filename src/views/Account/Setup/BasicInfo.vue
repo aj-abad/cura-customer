@@ -9,36 +9,40 @@
       </small>
       <h2>Basic information</h2>
     </div>
-    <v-text-field
-      dense
-      rounded
-      outlined
-      hide-details
-      label="First name"
-      class="mb-4"
-      v-model.trim="userInfo.firstName"
-      id="first-name-input"
-      v-focus="320"
-    />
-    <v-text-field
-      dense
-      rounded
-      outlined
-      hide-details
-      label="Last name"
-      v-model.trim="userInfo.lastName"
-      class="mb-4"
-    />
-    <v-text-field
-      readonly
-      dense
-      rounded
-      outlined
-      hide-details
-      label="Birth date"
-      v-model.trim="formattedDate"
-      @focus.prevent="showDialog()"
-    />
+    <form @submit.prevent="$emit('forward')">
+      <v-text-field
+        dense
+        rounded
+        outlined
+        label="First name"
+        hide-details="auto"
+        :error-messages="nameErrorMessage(userInfo.firstName)"
+        class="mb-4"
+        v-model.trim="userInfo.firstName"
+        id="first-name-input"
+        v-focus="320"
+      />
+      <v-text-field
+        dense
+        rounded
+        outlined
+        label="Last name"
+        :error-messages="nameErrorMessage(userInfo.lastName)"
+        hide-details="auto"
+        v-model.trim="userInfo.lastName"
+        class="mb-4"
+      />
+      <v-text-field
+        readonly
+        dense
+        rounded
+        outlined
+        label="Birth date"
+        v-model.trim="formattedDate"
+        @focus.prevent="showDialog()"
+      />
+      <button type="submit" class="d-none"></button>
+    </form>
   </div>
 </template>
 
@@ -67,6 +71,10 @@ export default {
       this.userInfo.birthDate = date;
       this.dialog = false;
     },
+    nameErrorMessage(name) {
+      if (name.length === 0) return null;
+      return validateName(name) ? null : "Name has invalid characters.";
+    }
   },
   computed: {
     formattedDate() {
@@ -75,6 +83,8 @@ export default {
         : "";
     },
     canGoForward() {
+      //valid first name and birthdate required
+      if (!this.userInfo.firstName) return false;
       const { firstName, lastName, birthDate } = this.userInfo;
       return validateName(`${firstName} ${lastName}`) && !!birthDate;
     },
