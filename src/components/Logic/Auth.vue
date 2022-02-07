@@ -1,6 +1,6 @@
 <template>
   <div style="display: none">
-     <v-dialog v-model="dialog" persistent>
+    <v-dialog v-model="dialog" persistent>
       <v-sheet class="rounded-lg pa-4">
         <h3 class="mb-2 primary--text text--darken-2">Session expired</h3>
         <p class="mb-4">Your session is expired. Please sign in again.</p>
@@ -32,15 +32,19 @@ export default {
     token() {
       return this.$store.getters.getToken;
     },
-
   },
   created() {
-    if (!this.token)
-      return null;
-    //TODO check if token is expired
-    this.$http.get("/")
+    if (!this.token) return null;
     this.setAuthHeader();
-
+    this.$http
+      .get("/account/details")
+      .then((response) => {
+        this.$store.dispatch("updateUser", response.data);
+      })
+      .catch((err) => {
+        const isInvalidToken = err.response?.status === 401;
+        this.dialog = isInvalidToken;
+      })
   },
   watch: {
     token() {
@@ -52,10 +56,10 @@ export default {
       const token = this.token ?? null;
       this.$http.defaults.headers.common["Authorization"] = token;
     },
-    signOut(){
+    signOut() {
       //TODO implement sign out
-      this.dialog = false
-    }
+      this.dialog = false;
+    },
   },
 };
 </script>
