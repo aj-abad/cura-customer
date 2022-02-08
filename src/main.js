@@ -16,7 +16,7 @@ import './assets/dynamictransitions'
 import 'croppie-constrained/croppie.css'
 import './sass/main.sass'
 import './sass/overrides.sass'
-import './assets/transitions.css'
+import './sass/transitions.sass'
 import './plugins/components'
 import './workers/workersetup'
 import "./setappstartpoint"
