@@ -12,24 +12,6 @@ import ViewContainer from "@/components/ViewContainer";
 import SplashScreen from "@/components/SplashScreen";
 export default {
   name: "App",
-  created() {
-    //TODO remove this
-    if (process.env.NODE_ENV === "development") {
-      window.vm = this;
-    }
-    const userStatusRedirect = new Map([
-      [1, "Home"],
-      [2, "WelcomeNewUser"],
-    ]);
-
-    return this.$router
-      .replace({
-        name:
-          userStatusRedirect.get(this.$store.getters.getUser.userStatus) ??
-          "Start",
-      })
-      .catch((err) => err);
-  },
   components: {
     LogicComponents,
     ViewContainer,
