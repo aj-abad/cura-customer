@@ -19,9 +19,8 @@ import './sass/overrides.sass'
 import './assets/transitions.css'
 import './plugins/components'
 import './workers/workersetup'
+import "./setappstartpoint"
 Vue.config.productionTip = false
-
-
 
 new Vue({
   vuetify,
