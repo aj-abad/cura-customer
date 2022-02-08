@@ -69,7 +69,7 @@ export default {
       return (this.userInfo.mobile = this.mobile.replaceAll(" ", ""));
     },
   },
-  inject: ["userInfo"],
+  inject: ["userInfo", "meta"],
   mixins: [multiStep],
 };
 </script>
