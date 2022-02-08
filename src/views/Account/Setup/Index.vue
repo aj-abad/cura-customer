@@ -75,6 +75,7 @@ export default {
         profilePhoto: null,
       },
       meta:{
+        //additional data go here
         mobileDialog: false,
       }
     };
@@ -92,6 +93,7 @@ export default {
   provide() {
     return {
       userInfo: this.userInfo,
+      meta: this.meta,
     };
   },
   methods: {
