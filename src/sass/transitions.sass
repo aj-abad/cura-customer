@@ -26,7 +26,6 @@
 .push-enter
   transform: translateX(100vw)
 
-
   &-active
     z-index: 2
 
@@ -44,6 +43,9 @@
 .fade-enter
   opacity: 0
 
+
+
+$slide-transition-duration: 0.3s
 .slide-push-enter-active,
 .slide-push-leave-active,
 .slide-pop-enter-active,
@@ -52,33 +54,40 @@
 .slide-parallax-push-leave-active,
 .slide-parallax-pop-enter-active,
 .slide-parallax-pop-leave-active
-  transition: 0.3s
+  transition: $slide-transition-duration
   position: absolute
   /* transition-timing-function: cubic-bezier(0.4, 0.8, 0.25, 1); */
 
-.slide-push-leave-to
+.slide-push-leave-to, .slide-pop-enter
   transform: translateX(-100vw)
 
-.slide-push-enter
+.slide-push-enter, .slide-pop-leave-to,
+.slide-parallax-push-enter, .slide-parallax-pop-leave-to
   transform: translateX(100vw)
 
-.slide-pop-leave-to
-  transform: translateX(100vw)
 
-.slide-pop-enter
-  transform: translateX(-100vw)
-
-.slide-parallax-push-leave-to
+.slide-parallax-push-leave-to, .slide-parallax-pop-enter
   transform: translateX(-12.5vw)
+  &:before
+      opacity: 1 !important
+  
 
-.slide-parallax-push-enter
-  transform: translateX(100vw)
 
-.slide-parallax-pop-leave-to
-  transform: translateX(100vw)
+.slide-parallax-push-leave-active, .slide-parallax-pop-enter-active
+  &:before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    width: 100vw
+    height: 100vh
+    background: rgba(0, 0, 0, 0.5)
+    transition: opacity $slide-transition-duration
+    will-change: opacity
+    opacity: 0
+    z-index: 1
 
-.slide-parallax-pop-enter
-  transform: translateX(-12.5vw)
+
 
 .clip-push-enter-active,
 .clip-push-leave-active,
@@ -95,11 +104,9 @@
   clip-path: circle(0% at 50% 50%)
   z-index: 2
 
-
   &-to
     clip-path: circle(var(--clip-transition-radius) at 50% 50%)
     z-index: 2
-
 
   &-active
     z-index: 2
@@ -110,13 +117,11 @@
 .clip-pop-leave
   clip-path: circle(var(--clip-transition-radius) at 50% 50%)
 
-
   &-active
     z-index: 2
 
 .clip-pop-enter
   opacity: 0
-
 
   &-to
     opacity: 1
