@@ -1,0 +1,122 @@
+.fade-fast-enter-active,
+.fade-fast-leave-active
+  transition: 0.15s
+
+.fade-fast-leave-to,
+.fade-fast-enter
+  transform: scale(0)
+  opacity: 0
+
+.fade-enter-active,
+.fade-leave-active
+  transition: 0.3s
+
+.push-enter-active,
+.push-leave-active,
+.pop-enter-active,
+.pop-leave-active
+  transition: 0.3s
+  position: absolute
+  /* transition-timing-function: cubic-bezier(0.4, 0.8, 0.25, 1); */
+
+.push-leave-to
+  transform: scale(0.9)
+  z-index: 1
+
+.push-enter
+  transform: translateX(100vw)
+
+
+  &-active
+    z-index: 2
+
+.pop-leave-to
+  transform: translateX(100vw)
+  z-index: 2
+
+.pop-enter
+  transform: scale(0.9)
+
+.pop-leave-active
+  z-index: 1
+
+.fade-leave-to,
+.fade-enter
+  opacity: 0
+
+.slide-push-enter-active,
+.slide-push-leave-active,
+.slide-pop-enter-active,
+.slide-pop-leave-active,
+.slide-parallax-push-enter-active,
+.slide-parallax-push-leave-active,
+.slide-parallax-pop-enter-active,
+.slide-parallax-pop-leave-active
+  transition: 0.3s
+  position: absolute
+  /* transition-timing-function: cubic-bezier(0.4, 0.8, 0.25, 1); */
+
+.slide-push-leave-to
+  transform: translateX(-100vw)
+
+.slide-push-enter
+  transform: translateX(100vw)
+
+.slide-pop-leave-to
+  transform: translateX(100vw)
+
+.slide-pop-enter
+  transform: translateX(-100vw)
+
+.slide-parallax-push-leave-to
+  transform: translateX(-12.5vw)
+
+.slide-parallax-push-enter
+  transform: translateX(100vw)
+
+.slide-parallax-pop-leave-to
+  transform: translateX(100vw)
+
+.slide-parallax-pop-enter
+  transform: translateX(-12.5vw)
+
+.clip-push-enter-active,
+.clip-push-leave-active,
+.clip-pop-enter-active,
+.clip-pop-leave-active
+  transition: var(--clip-transition-duration)
+  position: absolute
+  transition-timing-function: cubic-bezier(0.4, 0.8, 0.25, 1)
+
+.clip-push-leave-to
+  opacity: 0
+
+.clip-push-enter
+  clip-path: circle(0% at 50% 50%)
+  z-index: 2
+
+
+  &-to
+    clip-path: circle(var(--clip-transition-radius) at 50% 50%)
+    z-index: 2
+
+
+  &-active
+    z-index: 2
+
+.clip-pop-leave-to
+  clip-path: circle(0% at 50% 50%)
+
+.clip-pop-leave
+  clip-path: circle(var(--clip-transition-radius) at 50% 50%)
+
+
+  &-active
+    z-index: 2
+
+.clip-pop-enter
+  opacity: 0
+
+
+  &-to
+    opacity: 1
