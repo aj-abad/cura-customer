@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="vw-100 vh-100">
     <splash-screen />
     <view-container />
     <logic-components />
@@ -19,19 +19,3 @@ export default {
   },
 };
 </script>
-
-<style lang="stylus">
-#app {
-  height: 100vh;
-  width: 100vw;
-}
-
-#offline-overlay {
-  position: absolute;
-  inset: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(255, 255, 255, 0.5);
-  z-index: 999;
-}
-</style>
