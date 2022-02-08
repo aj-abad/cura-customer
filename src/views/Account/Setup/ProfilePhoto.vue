@@ -117,7 +117,8 @@ export default {
         .find((route) => route.name === "AccountSetup")
         .children.find((route) => route.meta.step === this.currentStep + 1);
 
-      nextStep ? this.$router.push(nextStep) : null;
+      URL.revokeObjectURL(this.imageURL);
+      this.$router.push(nextStep)
     },
     openImageInput() {
       this.$refs.imgInput.click();
