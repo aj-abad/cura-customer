@@ -189,7 +189,6 @@ export default {
       this.dialog = false;
       return next(false);
     }
-    URL.revokeObjectURL(this.imageURL);
     return next(true);
   },
   inject: ["userInfo"],
