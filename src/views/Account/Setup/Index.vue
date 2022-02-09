@@ -71,7 +71,7 @@ export default {
         firstName: "",
         lastName: "",
         birthDate: "",
-        mobile: "",
+        mobile: this.$store.getters.getUser.mobile ?? "",
         profilePhoto: null,
       },
       meta:{
@@ -99,6 +99,18 @@ export default {
   methods: {
     goForward() {
       if (!this.canGoForward) return;
+      //special actions go here
+      switch (this.currentStep){
+        case 2:
+          //open mobile dialog if user doesn't have mobile number set
+          if (this.userInfo.mobile) break;
+          return this.meta.mobileDialog = true;
+        case 3:
+          //set profile photo
+      }
+
+
+
       const nextStep = this.$router.options.routes
         .find((route) => route.name === "AccountSetup")
         .children.find((route) => route.meta.step === this.currentStep + 1);
