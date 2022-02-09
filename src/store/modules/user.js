@@ -1,15 +1,15 @@
-const savedState = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+const saved = JSON.parse(localStorage.getItem("user") ?? "{}");
 const token = localStorage.getItem('token') ?? null;
 
 const store = {
   state: {
     user: {
-      userId: savedState?.userId ?? null,
-      userStatus: savedState?.userStatus ?? null,
-      firstName: savedState?.firstName ?? null,
-      lastName: savedState?.lastName ?? null,
-      mobile: savedState?.mobile ?? null,
-      profilePhoto: savedState?.profilePhoto ?? null,
+      userId: saved?.userId ?? null,
+      userStatus: saved?.userStatus ?? null,
+      firstName: saved?.firstName ?? null,
+      lastName: saved?.lastName ?? null,
+      mobile: saved?.mobile ?? null,
+      profilePhoto: saved?.profilePhoto ?? null,
     },
     token,
   },
