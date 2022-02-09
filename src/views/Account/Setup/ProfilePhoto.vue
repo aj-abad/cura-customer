@@ -192,7 +192,7 @@ export default {
     }
     return next(true);
   },
-  inject: ["userInfo"],
+  inject: ["userInfo", "meta"],
   mixins: [multiStep],
 };
 </script>
