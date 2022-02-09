@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="rounded-lg pa-4 text-center">
+  <v-sheet class="rounded-lg px-4 py-6 text-center">
     <sms-verify-illustration class="w-100 px-6 mb-4" />
     <h3 class="mb-2">Verify your mobile number</h3>
     <p class="mb-4">
