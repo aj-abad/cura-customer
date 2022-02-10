@@ -126,7 +126,7 @@ export default {
         .post("/email/resendverificationmail", { email })
         .then(() => this.startTimer(this.timerDuration))
         .catch((err) => {
-          this.$emit("snackbarmessage", err?.response?.data?.errorMessage);
+          this.showSnackbar(err?.response?.data?.errorMessage);
         })
         .finally(() => (this.isResending = false));
     },
@@ -151,7 +151,7 @@ export default {
           });
         })
         .catch((err) => {
-          this.$emit("snackbarmessage", err?.response?.data?.errorMessage);
+          this.showSnackbar(err?.response?.data?.errorMessage);
         })
         .finally(() => (this.isLoading = false));
     },
@@ -184,6 +184,7 @@ export default {
     }
     return next();
   },
+  inject: ["showSnackbar"]
 };
 </script>
 
