@@ -43,7 +43,7 @@
 
 <script>
 import Loader from "@/components/SVG/Loader";
-import routeTransitions from "@/assets/routetransitions";
+import routeTransitions from "@/modules/routetransitions";
 export default {
   name: "ViewContainer",
   components: { Loader },
@@ -60,13 +60,10 @@ export default {
   watch: {
     $route(to, from) {
       //custom transitions
-      const customTransition =
-        routeTransitions.get(`${to.name}-${from.name}`) ||
-        routeTransitions.get(`${from.name}-${to.name}`);
+      const customTransition = routeTransitions.get(`${to.name}-${from.name}`);
       if (customTransition) {
         return (this.transition = customTransition);
       }
-
       // Default transition
       this.transition = to.meta.depth > from.meta.depth ? "push" : "pop";
     },
