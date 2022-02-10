@@ -57,7 +57,7 @@ export default {
       this.$http.defaults.headers.common["Authorization"] = token;
     },
     signOut() {
-      //TODO implement sign out
+      this.$store.dispatch("signOut");
       this.dialog = false;
     },
   },
