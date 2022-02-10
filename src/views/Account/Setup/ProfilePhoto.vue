@@ -58,10 +58,10 @@
           })`"
         >
           <v-icon
-            :color="profilePhotoPreview ? 'white' : 'black'"
+            :color="profilePhotoPreview.url ? 'white' : 'black'"
             size="48"
             style="transform: translateX(-2px) translateY(-4px)"
-            :style="`opacity: ${profilePhotoPreview ? 1 : 0.75}`"
+            :style="`opacity: ${profilePhotoPreview.url ? 1 : 0.75}`"
           >
             mdi-camera-plus
           </v-icon>
@@ -103,14 +103,14 @@ export default {
       dialog: false,
       animating: false,
       croppie: null,
-      profilePhotoPreview: this.userInfo.profilePhoto
-        ? Object.assign({}, this.userInfo.profilePhoto)
-        : null,
     };
   },
   computed: {
+    profilePhotoPreview() {
+      return this.meta.profilePhotoPreview;
+    },
     canGoForward() {
-      return !!this.profilePhotoPreview;
+      return !!this.profilePhotoPreview.url;
     },
   },
   methods: {
@@ -120,6 +120,11 @@ export default {
         .children.find((route) => route.meta.step === this.currentStep + 1);
 
       URL.revokeObjectURL(this.imageURL);
+      URL.revokeObjectURL(this.profilePhotoPreview.url);
+      Object.assign(this.profilePhotoPreview, {
+        url: null,
+        bounds: null,
+      });
       this.$router.push(nextStep);
     },
     openImageInput() {
@@ -130,17 +135,22 @@ export default {
       const file = this.$refs.imgInput.files[0];
       if (!file) return null;
       if (file.size > 1000 * 5000)
-        return this.showSnackbar("Please pick an image 5MB or smaller.");
+        return this.$parent.$parent.$emit(
+          "snackbarMessage",
+          "Please pick an image 5MB or smaller."
+        );
       this.imgFile = file;
-      URL.revokeObjectURL(this.imageURL);
       return this.openCroppie();
     },
     destroyCroppie() {
       this.croppie?.destroy();
       this.croppie = null;
+      if (this.profilePhotoPreview.url !== this.imageURL)
+        URL.revokeObjectURL(this.imageURL);
     },
     openCroppie() {
       this.destroyCroppie();
+      URL.revokeObjectURL(this.imageURL)
       this.imageURL = URL.createObjectURL(this.imgFile);
       this.$refs.imgInput.value = null;
       this.dialog = true;
@@ -177,10 +187,9 @@ export default {
           type: "points",
         })
       ).map((point) => parseFloat(point));
-      this.profilePhotoPreview = {
-        url: this.imageURL,
-        bounds,
-      };
+      URL.revokeObjectURL(this.profilePhotoPreview.url);
+      this.profilePhotoPreview.url = this.imageURL;
+      this.profilePhotoPreview.bounds = bounds;
       this.closeCroppie();
     },
   },
@@ -191,7 +200,13 @@ export default {
     }
     return next(true);
   },
-  inject: ["showSnackbar", "userInfo", "meta"],
+  created() {
+    if (!this.userInfo.profilePhoto.url) {
+      this.meta.profilePhotoPreview.url = null;
+      this.meta.profilePhotoPreview.bounds = null;
+    }
+  },
+  inject: ["userInfo", "meta"],
   mixins: [multiStep],
 };
 </script>
