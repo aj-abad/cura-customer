@@ -60,7 +60,7 @@ export default {
   watch: {
     $route(to, from) {
       //custom transitions
-      const customTransition = routeTransitions.get(`${to.name}-${from.name}`);
+      const customTransition = routeTransitions.get(`${from.name}-${to.name}`);
       if (customTransition) {
         return (this.transition = customTransition);
       }
