@@ -12,24 +12,20 @@ Vue.use(Vuetify);
 
 const opts = {
   theme: {
-    // dark: true,
+    dark: false,
     options: {
       customProperties: true,
     },
-  },
-  themes: {
-    light: {
-      background: "#fff",
-      primary: "#0d826e",
-      primarylight: "#00a987",
-      primarylighter: "#aeddd5",
-      secondary: "#f69b7a",
-      secondarylight: "#f7eab5",
-      error: "#820D21",
-      bglight: "#dff2ef",
-    },
-    dark: {
-      background: "#1e1e1e",
+    themes: {
+      light: {
+        primary: "#0d826e",
+        primarylight: "#00a987",
+        primarylighter: "#aeddd5",
+        secondary: "#f69b7a",
+        secondarylight: "#f7eab5",
+        error: "#820D21",
+        bglight: "#dff2ef",
+      },
     },
   },
 };
