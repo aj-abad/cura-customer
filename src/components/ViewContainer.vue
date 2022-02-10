@@ -15,7 +15,7 @@
           style="font-size: 1.05em"
           aria-live="assertive"
         >
-          {{ loadingMessage }}
+          {{ progressMessage }}
         </div>
       </v-sheet>
     </v-dialog>
@@ -26,12 +26,7 @@
     </div> -->
     <transition :name="transition">
       <keep-alive :include="cachedComponents">
-        <router-view
-          @snackbarMessage="showSnackbar"
-          @showLoading="showLoadingDialog"
-          class="page"
-          id="view"
-        />
+        <router-view class="page" id="view" />
       </keep-alive>
     </transition>
     <v-snackbar
@@ -58,31 +53,9 @@ export default {
       transition: "push",
       snackbar: false,
       loadingDialog: false,
-      loadingMessage: "Loading...",
+      progressMessage: "Loading...",
       snackbarMessage: "",
     };
-  },
-  computed: {
-    userStatus() {
-      return this.$store.getters.getAccount?.userStatus;
-    },
-  },
-  methods: {
-    showSnackbar(message) {
-      this.snackbar = true;
-      this.snackbarMessage =
-        message ??
-        (navigator.onLine
-          ? "Oops, something went wrong on our part."
-          : "Cannot connect to Cura.");
-    },
-    showLoadingDialog(status, message) {
-      this.loadingDialog = status;
-      if (message) this.loadingMessage = message;
-      this.$nextTick(() =>
-        document.querySelector("#progress-message")?.focus()
-      );
-    },
   },
   watch: {
     $route(to, from) {
@@ -97,6 +70,25 @@ export default {
       // Default transition
       this.transition = to.meta.depth > from.meta.depth ? "push" : "pop";
     },
+  },
+  provide() {
+    return {
+      showSnackbar: (
+        msg = navigator.onLine
+          ? "Oops, something went wrong on our part."
+          : "Cannot connect to Cura."
+      ) => {
+        this.snackbar = true;
+        this.snackbarMessage = msg;
+      },
+      showProgressDialog: (show = true, msg = "Please wait...") => {
+        this.loadingDialog = show;
+        this.progressMessage = msg;
+        this.$nextTick(() =>
+          document.querySelector("#progress-message")?.focus()
+        );
+      },
+    };
   },
 };
 </script>
