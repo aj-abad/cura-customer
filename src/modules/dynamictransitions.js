@@ -1,4 +1,3 @@
-
 const root = document.querySelector(":root")
 
 const setClipTransitionRadius = () => {
