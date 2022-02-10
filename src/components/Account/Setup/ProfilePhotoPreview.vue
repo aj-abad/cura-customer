@@ -31,7 +31,7 @@ export default {
       return this.profilePhotoPreview?.url;
     },
     profilePhotoPreviewContainer() {
-      if (!this.profilePhotoPreview) return null;
+      if (!this.profilePhotoPreview?.url) return null;
       const { bounds } = this.profilePhotoPreview;
       const [x1, y1, x2, y2] = bounds;
       return {
@@ -40,7 +40,7 @@ export default {
       };
     },
     profilePhotoPreviewStyle() {
-      if (!this.profilePhotoPreview) return null;
+      if (!this.profilePhotoPreview?.url) return null;
 
       const { bounds } = this.profilePhotoPreview;
       return {
