@@ -145,6 +145,7 @@ export default {
         })
         .then(() => {
           //to avoid redundant navigation
+          this.$store.dispatch("updateUser", {userStatus: 2});
           this.isLocked = false;
           this.$router.push({
             name: "WelcomeNewUser",
