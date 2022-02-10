@@ -114,7 +114,7 @@ export default {
           this.$router.push({ name });
         })
         .catch((err) =>
-          this.$emit("snackbarMessage", err?.response?.data?.errorMessage)
+          this.showSnackbar(err?.response?.data?.errorMessage)
         )
         .finally(() => (this.isLoading = false));
     },
@@ -122,5 +122,6 @@ export default {
       //TODO implement
     },
   },
+  inject: ["showSnackbar"]
 };
 </script>
