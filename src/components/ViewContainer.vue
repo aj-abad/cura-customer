@@ -102,7 +102,7 @@ export default {
 }
 
 .page {
-  background: white;
+  background: var(--v-background-base);
 }
 
 #is-offline {
