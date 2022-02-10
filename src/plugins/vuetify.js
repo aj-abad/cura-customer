@@ -18,6 +18,7 @@ const opts = {
     },
     themes: {
       light: {
+        background: "#fff",
         primary: "#0d826e",
         primarylight: "#00a987",
         primarylighter: "#aeddd5",
