@@ -140,10 +140,11 @@ export default {
           });
         })
         .catch((err) =>
-          this.$emit("snackbarMessage", err?.response?.data?.errorMessage)
+          this.showSnackbar(err?.response?.data?.errorMessage)
         )
         .finally(() => (this.isLoading = false));
     },
   },
+  inject: ["showSnackbar"]
 };
 </script>
