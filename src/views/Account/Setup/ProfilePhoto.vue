@@ -103,7 +103,9 @@ export default {
       dialog: false,
       animating: false,
       croppie: null,
-      profilePhotoPreview: this.userInfo.profilePhoto ? Object.assign({}, this.userInfo.profilePhoto) : null,
+      profilePhotoPreview: this.userInfo.profilePhoto
+        ? Object.assign({}, this.userInfo.profilePhoto)
+        : null,
     };
   },
   computed: {
@@ -118,7 +120,7 @@ export default {
         .children.find((route) => route.meta.step === this.currentStep + 1);
 
       URL.revokeObjectURL(this.imageURL);
-      this.$router.push(nextStep)
+      this.$router.push(nextStep);
     },
     openImageInput() {
       this.$refs.imgInput.click();
@@ -128,10 +130,7 @@ export default {
       const file = this.$refs.imgInput.files[0];
       if (!file) return null;
       if (file.size > 1000 * 5000)
-        return this.$parent.$parent.$emit(
-          "snackbarMessage",
-          "Please pick an image 5MB or smaller."
-        );
+        return this.showSnackbar("Please pick an image 5MB or smaller.");
       this.imgFile = file;
       URL.revokeObjectURL(this.imageURL);
       return this.openCroppie();
@@ -192,7 +191,7 @@ export default {
     }
     return next(true);
   },
-  inject: ["userInfo", "meta"],
+  inject: ["showSnackbar", "userInfo", "meta"],
   mixins: [multiStep],
 };
 </script>
