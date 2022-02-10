@@ -72,12 +72,19 @@ export default {
         lastName: "",
         birthDate: "",
         mobile: this.$store.getters.getUser.mobile ?? "",
-        profilePhoto: null,
+        profilePhoto: {
+          url: null,
+          bounds: null,
+        },
       },
-      meta:{
+      meta: {
         //additional data go here
         mobileDialog: false,
-      }
+        profilePhotoPreview: {
+          url: null,
+          bounds: null,
+        }
+      },
     };
   },
   computed: {
@@ -100,16 +107,15 @@ export default {
     goForward() {
       if (!this.canGoForward) return;
       //special actions go here
-      switch (this.currentStep){
+      switch (this.currentStep) {
         case 2:
           //open mobile dialog if user doesn't have mobile number set
           if (this.userInfo.mobile) break;
-          return this.meta.mobileDialog = true;
+          return (this.meta.mobileDialog = true);
         case 3:
-          //set profile photo
+        //set profile photo
+        Object.assign(this.userInfo.profilePhoto, this.meta.profilePhotoPreview);
       }
-
-
 
       const nextStep = this.$router.options.routes
         .find((route) => route.name === "AccountSetup")
