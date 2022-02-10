@@ -211,7 +211,7 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .profile-photo-btn-container {
   width: 100% !important;
   aspect-ratio: 1 / 1 !important;
