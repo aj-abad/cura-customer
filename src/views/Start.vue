@@ -10,7 +10,7 @@
     <v-sheet
       elevation="6"
       class="
-        white
+        background
         position-absolute
         w-100
         bottom
