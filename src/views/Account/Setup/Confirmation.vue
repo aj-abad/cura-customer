@@ -8,7 +8,9 @@
     </div>
     <div class="profile-photo-btn-container pa-12">
       <div class="h-100 w-100 position-relative">
-        <profile-photo-preview :profilePhotoPreview="userInfo.profilePhoto" />
+        <profile-photo-preview v-if="userInfo.profilePhoto.url" :profilePhotoPreview="userInfo.profilePhoto" />
+        <!-- TODO add meaningful profile photo placeholder -->
+        <div class="h-100 w-100 red" style="border-radius: 1000px" v-else ></div>
       </div>
     </div>
     <div class="text-center mt-n8">
@@ -21,15 +23,22 @@
 
 <script>
 import ProfilePhotoPreview from "@/components/Account/Setup/ProfilePhotoPreview";
+import multiStep from "@/mixins/multistepform";
 export default {
   name: "Confirmation",
   components: {
     ProfilePhotoPreview,
+  },
+  computed:{
+    canGoForward(){
+      return true;
+    }
   },
   props: {
     steps: Number,
     currentStep: Number,
   },
   inject: ["userInfo"],
+  mixins: [multiStep],
 };
 </script>
