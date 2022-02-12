@@ -143,9 +143,10 @@ export default {
           code: this.pin,
           email: this.email,
         })
-        .then(() => {
-          //to avoid redundant navigation
-          this.$store.dispatch("updateUser", {userStatus: 2});
+        .then((res) => {
+          const {token, user} = res.data;
+          this.$store.dispatch("setToken", token);
+          this.$store.dispatch("updateUser", user);
           this.isLocked = false;
           this.$router.push({
             name: "WelcomeNewUser",
