@@ -121,7 +121,7 @@ export default {
 
       URL.revokeObjectURL(this.imageURL);
       URL.revokeObjectURL(this.profilePhotoPreview.url);
-      Object.assign(this.profilePhotoPreview, {
+      Object.assign(this.userInfo.profilePhoto, {
         url: null,
         bounds: null,
       });
