@@ -18,7 +18,7 @@
         hide-details="auto"
         :error-messages="nameErrorMessage(userInfo.firstName)"
         class="mb-4"
-        v-model.trim="userInfo.firstName"
+        v-model="userInfo.firstName"
         id="first-name-input"
         v-focus="320"
       />
@@ -29,7 +29,7 @@
         label="Last name"
         :error-messages="nameErrorMessage(userInfo.lastName)"
         hide-details="auto"
-        v-model.trim="userInfo.lastName"
+        v-model="userInfo.lastName"
         class="mb-4"
       />
       <v-text-field
@@ -38,7 +38,7 @@
         rounded
         outlined
         label="Birth date"
-        v-model.trim="formattedDate"
+        v-model="formattedDate"
         @focus.prevent="showDialog()"
       />
       <button type="submit" class="d-none"></button>
