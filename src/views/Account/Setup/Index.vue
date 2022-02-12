@@ -49,7 +49,10 @@
         large
         block
       >
-        Next <v-icon small>mdi-chevron-right</v-icon>
+        <span v-if="currentStep !== steps"
+          >Next <v-icon small>mdi-chevron-right</v-icon></span
+        >
+        <span v-else>Finish up</span>
       </v-btn>
     </div>
   </div>
@@ -83,7 +86,7 @@ export default {
         profilePhotoPreview: {
           url: null,
           bounds: null,
-        }
+        },
       },
     };
   },
@@ -103,6 +106,7 @@ export default {
       meta: this.meta,
     };
   },
+  inject: ["showSnackbar"],
   methods: {
     goForward() {
       if (!this.canGoForward) return;
@@ -113,14 +117,36 @@ export default {
           if (this.userInfo.mobile) break;
           return (this.meta.mobileDialog = true);
         case 3:
-        //set profile photo
-        Object.assign(this.userInfo.profilePhoto, this.meta.profilePhotoPreview);
+          //set profile photo
+          Object.assign(
+            this.userInfo.profilePhoto,
+            this.meta.profilePhotoPreview
+          );
+          break;
+        case 4:
+          //save user info
+          return this.finishAccountSetup();
       }
 
       const nextStep = this.$router.options.routes
         .find((route) => route.name === "AccountSetup")
         .children.find((route) => route.meta.step === this.currentStep + 1);
       if (nextStep) return this.$router.push(nextStep.path);
+    },
+    finishAccountSetup() {
+      const { firstName, lastName, birthDate, profilePhoto } = this.userInfo;
+      this.$http
+        .post("/account/setup", {
+          firstName,
+          lastName,
+          birthDate,
+          profilePhoto,
+        })
+        .then((res) => {
+          this.$store.dispatch("updateUser", res.data);
+          this.$router.push("/requestlocation");
+        })
+        .catch((err) => this.showSnackbar(err.response?.data?.errorMessage));
     },
     signOut() {
       this.isLocked = false;
