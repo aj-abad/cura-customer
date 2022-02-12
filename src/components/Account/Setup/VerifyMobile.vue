@@ -4,10 +4,15 @@
     <h3 class="mb-2">Verify your mobile number</h3>
     <p class="mb-4">
       To verify your mobile number, we'll send a 5-digit code to
-      <strong class="text-no-wrap">+63 {{ mobile }}</strong
-      >.
+      <strong class="text-no-wrap"> +63 {{ mobile }}</strong>.
     </p>
-    <v-btn @click="sendVerificationSMS" large elevation="0" block color="primary">
+    <v-btn
+      @click="sendVerificationSMS"
+      large
+      elevation="0"
+      block
+      color="primary"
+    >
       <v-progress-circular
         indeterminate
         color="white"
@@ -28,18 +33,21 @@ export default {
   props: {
     mobile: String,
   },
-  data(){
+  data() {
     return {
-      isLoading: false
-    }
+      isLoading: false,
+    };
   },
   methods: {
     sendVerificationSMS() {
       if (this.isLoading) return;
       this.isLoading = true;
-
-      this.$http.post("/sms/send")
-      .finally(() => this.isLoading = false)
+      //TODO implement this
+      this.$http
+        .post("/sms/sendverificationsms", { mobile: this.mobile })
+        .then()
+        .catch()
+        .finally(() => (this.isLoading = false));
     },
   },
 };
