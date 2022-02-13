@@ -5,7 +5,7 @@ const token = localStorage.getItem("token") ?? null
 
 //TODO register actual events
 const registerEvents = (socket) => {
-  socket.on("connect", () => { console.log("connected") })
+  socket.on("connect", () => { console.log(`%cConnected with ID ${socket.id}` , "font-size: 4rem; color: rebeccapurple; font-family: 'bayshore', 'comic sans ms'") })
 }
 
 const connectSocket = (token) => {
