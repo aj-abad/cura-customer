@@ -63,7 +63,7 @@ export default {
       this.isLoading = true;
       const email = this.email?.trim()?.toLowerCase();
       this.$http
-        .post("/auth/checkemail", { email, userType: 1 })
+        .post("/auth/checkemail", { email })
         .then((res) => {
           sessionStorage.setItem("email", email);
           const name = res.data?.emailExists ? "SignIn" : "SignUp";
