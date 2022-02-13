@@ -39,6 +39,25 @@
         </div>
       </v-sheet>
     </v-dialog>
+    <v-dialog v-model="confirmDialog">
+      <v-sheet class="rounded-lg text-center pa-4">
+        <h3 class="mb-2">Skip profile photo?</h3>
+        <p class="mb-4">Proceed without a profile photo?</p>
+        <v-btn
+          large
+          elevation="0"
+          @click="skipStep()"
+          block
+          color="primary"
+          class="mb-2"
+        >
+          Proceed
+        </v-btn>
+        <v-btn @click="confirmDialog = false" block plain large elevation="0">
+          Go back
+        </v-btn>
+      </v-sheet>
+    </v-dialog>
     <div>
       <small class="ml-auto font-weight-semibold grey--text text--darken-2">
         Step {{ currentStep }} of {{ steps }}
@@ -76,7 +95,7 @@
       />
     </div>
     <div class="mt-auto mb-2">
-      <v-btn plain elevation="0" large block @click="skipStep()">
+      <v-btn plain elevation="0" large block @click="profilePhotoPreview.url ? openSkipDialog() : skipStep()">
         Maybe later
       </v-btn>
     </div>
@@ -101,6 +120,7 @@ export default {
       imgFile: null,
       imageURL: null,
       dialog: false,
+      confirmDialog: false,
       animating: false,
       croppie: null,
     };
@@ -114,6 +134,9 @@ export default {
     },
   },
   methods: {
+    openSkipDialog() {
+      this.confirmDialog = true;
+    },
     skipStep() {
       const nextStep = this.$router.options.routes
         .find((route) => route.name === "AccountSetup")
@@ -150,7 +173,7 @@ export default {
     },
     openCroppie() {
       this.destroyCroppie();
-      URL.revokeObjectURL(this.imageURL)
+      URL.revokeObjectURL(this.imageURL);
       this.imageURL = URL.createObjectURL(this.imgFile);
       this.$refs.imgInput.value = null;
       this.dialog = true;
