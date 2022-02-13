@@ -18,7 +18,7 @@
         :errorMessages="mobileErrorMessages"
         hide-details="auto"
         label="Mobile number"
-        v-model.trim="mobile"
+        v-model="mobile"
         prefix="+63"
         inputmode="numeric"
         v-mask="'### ### ####'"
