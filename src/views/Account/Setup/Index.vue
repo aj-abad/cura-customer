@@ -52,7 +52,7 @@
         <span v-if="currentStep !== steps"
           >Next <v-icon small>mdi-chevron-right</v-icon></span
         >
-        <span v-else>Finish up</span>
+        <span v-else>Confirm</span>
       </v-btn>
     </div>
   </div>
