@@ -59,6 +59,7 @@ export default {
     signOut() {
       this.$store.dispatch("signOut");
       this.dialog = false;
+      this.$router.replace("/")
     },
   },
 };
