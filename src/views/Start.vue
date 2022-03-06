@@ -16,7 +16,7 @@
         bottom
         left
         pa-6
-        rounded-xl
+        rounded-lg
         bottom-sheet
       "
     >
