@@ -7,35 +7,22 @@
         Create a Cura account.
       </h3>
       <form id="signup-form" @submit.prevent="signUp()" class="mt-6">
-        <v-text-field
+        <v-labeled-text-field
           v-model.trim="email"
-          outlined
-          rounded
-          dense
-          label="Email address"
-          hide-details
-          class="mb-4"
           readonly
           filled
+          label="Email address"
+          class="mb-2"
         />
-        <v-text-field
-          v-model="password"
-          :type="showPassword ? 'text' : 'password'"
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append="showPassword = !showPassword"
-          :aria-label:append="showPassword ? 'Hide password' : 'Show password'"
-          outlined
-          rounded
-          dense
-          label="Password"
-          hide-details
-          class="mb-0"
+        <v-labeled-text-field
+          type="password"
+          v-model.trim="password"
+          :showPassword="true"
           v-focus="320"
-          id="password-input"
-          autocomplete="off"
+          label="Password"
         />
         <p>
-          <small>
+          <small :aria-label="`Password is ${passwordStrength.message}`" aria-live="polite">
             Password strength:
             <span
               class="font-weight-bold"
@@ -83,7 +70,11 @@ owasp.config({
   minOptionalTestsToPass: 4,
 });
 owasp.tests.required = [];
-owasp.tests.required.push(password=>password.length < 6 || password.length > 128 ? "Password must be between 6 and 128 characters" : null);
+owasp.tests.required.push((password) =>
+  password.length < 6 || password.length > 128
+    ? "Password must be between 6 and 128 characters"
+    : null
+);
 export default {
   name: "SignUp",
   data() {
@@ -139,12 +130,10 @@ export default {
             query: { email, secondsBeforeResend },
           });
         })
-        .catch((err) =>
-          this.showSnackbar(err?.response?.data?.errorMessage)
-        )
+        .catch((err) => this.showSnackbar(err?.response?.data?.errorMessage))
         .finally(() => (this.isLoading = false));
     },
   },
-  inject: ["showSnackbar"]
+  inject: ["showSnackbar"],
 };
 </script>
