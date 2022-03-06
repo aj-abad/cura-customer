@@ -7,15 +7,11 @@
         We'll check if you have an account.
       </h3>
       <form @submit.prevent="submitEmail()" class="mt-6">
-        <v-text-field
-          id="email-input"
+        <v-labeled-text-field
           v-focus="320"
+          type="email"
           v-model.trim="email"
-          outlined
-          rounded
-          dense
           label="Email address"
-          hide-details
           class="mb-4"
         />
         <v-btn
