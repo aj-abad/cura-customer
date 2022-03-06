@@ -18,7 +18,7 @@ import './sass/main.sass'
 import './sass/overrides.sass'
 import './sass/transitions.sass'
 import './sass/opacity.sass'
-import './plugins/components'
+import './plugins/globalcomponents'
 import './workers/workersetup'
 import "./setappstartpoint"
 Vue.config.productionTip = false
