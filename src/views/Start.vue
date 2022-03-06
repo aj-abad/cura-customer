@@ -1,7 +1,7 @@
 <template>
-  <div class="bglight pt-6">
-    <div class="d-flex mb-2 justify-center">
-      <cura-logo style="width: 48px" aria-label="Cura" />
+  <div class="bglight">
+    <div class="d-flex justify-center mt-6" style="height: 48px">
+      <cura-logo style="width: 48px; height: auto" aria-label="Cura" />
     </div>
     <div class="text-center">
       <h2 class="font-weight-semibold">Self-care, delivered.</h2>
