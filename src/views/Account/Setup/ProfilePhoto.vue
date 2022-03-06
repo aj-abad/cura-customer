@@ -41,7 +41,7 @@
     </v-dialog>
     <v-dialog v-model="confirmDialog">
       <v-sheet class="rounded-lg text-center pa-4">
-        <h3 class="mb-2">Skip profile photo?</h3>
+        <h3 class="mb-2">Remove profile photo?</h3>
         <p class="mb-4">Proceed without a profile photo?</p>
         <v-btn
           large
