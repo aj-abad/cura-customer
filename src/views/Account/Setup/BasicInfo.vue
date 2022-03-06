@@ -1,8 +1,8 @@
 <template>
   <div class="pa-6 h-100 w-100">
-    <v-dialog v-model="dialog">
+    <v-bottom-sheet v-model="dialog">
       <birth-date-picker @update="setBirthDate" />
-    </v-dialog>
+    </v-bottom-sheet>
     <div class="mb-6">
       <small class="ml-auto font-weight-semibold grey--text text--darken-2">
         Step {{ currentStep }} of {{ steps }}
@@ -74,7 +74,7 @@ export default {
     nameErrorMessage(name) {
       if (name.length === 0) return null;
       return validateName(name) ? null : "Name has invalid characters.";
-    }
+    },
   },
   computed: {
     formattedDate() {
