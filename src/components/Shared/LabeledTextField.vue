@@ -7,8 +7,13 @@
       :value="value"
       outlined
       dense
-      :type="type ?? 'text'"
+      :readonly="readonly ?? false"
+      :disabled="disabled ?? false"
+      :filled="filled ?? false"
+      :type="inputType ?? 'text'"
       :id="`input-${_uid}`"
+      :append-icon="appendIcon"
+      @click:append="appendIconClickHandler"
       hide-details="auto"
       @input="inputHandler"
     ></v-text-field>
@@ -18,12 +23,41 @@
 <script>
 export default {
   name: "LabeledTextField",
-  props: ["label", "value", "type"],
-  methods:{
-    inputHandler(val){
-      this.$emit('input', val)
-    }
-  }
+  props: [
+    "label",
+    "value",
+    "type",
+    "readonly",
+    "filled",
+    "disabled",
+    "showPassword",
+  ],
+  data() {
+    return {
+      password: !!this.showPassword,
+    };
+  },
+  methods: {
+    inputHandler(val) {
+      this.$emit("input", val);
+    },
+    appendIconClickHandler() {
+      if (this.type === "password") {
+        this.password = !this.password;
+      }
+    },
+  },
+  computed: {
+    appendIcon() {
+      if (this.type === "password")
+        return this.password ? "mdi-eye" : "mdi-eye-off";
+      return null;
+    },
+    inputType() {
+      if (this.type === "password") return this.password ? "text" : "password";
+      return this.type;
+    },
+  },
 };
 </script>
 
