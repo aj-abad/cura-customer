@@ -118,8 +118,8 @@ export default {
   width: 100%;
   max-width: 100%;
   outline: none !important;
-  border-radius: 24px;
-  border: 1px solid rgba(0, 0, 0, 0.42);
+  border-radius: 8px;
+  border: 2px solid rgba(0, 0, 0, 0.42);
   height: 40px;
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
 
