@@ -13,9 +13,11 @@
       :type="inputType ?? 'text'"
       :id="`input-${_uid}`"
       :append-icon="appendIcon"
+      :error-messages="errorMessages ?? []"
       @click:append="appendIconClickHandler"
       hide-details="auto"
       @input="inputHandler"
+      @focus="$emit('focus')"
     ></v-text-field>
   </div>
 </template>
@@ -31,6 +33,7 @@ export default {
     "filled",
     "disabled",
     "showPassword",
+    "errorMessages"
   ],
   data() {
     return {
