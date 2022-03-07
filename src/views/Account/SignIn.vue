@@ -28,31 +28,18 @@
         Sign in to your Cura account.
       </h3>
       <form id="signup-form" @submit.prevent="signIn()" class="mt-6">
-        <v-text-field
+        <v-labeled-text-field
           v-model.trim="email"
-          outlined
-          rounded
-          dense
-          label="Email address"
-          hide-details
-          class="mb-4"
           readonly
           filled
-        />
-        <v-text-field
-          v-model="password"
-          :type="showPassword ? 'text' : 'password'"
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append="showPassword = !showPassword"
-          v-focus="320"
-          outlined
-          rounded
-          dense
-          label="Password"
-          hide-details
+          label="Email address"
           class="mb-2"
-          id="password-input"
-          autocomplete="off"
+        />
+        <v-labeled-text-field
+          type="password"
+          v-model.trim="password"
+          v-focus="320"
+          label="Password"
         />
         <p>
           <!-- TODO implement forgot password -->
@@ -113,15 +100,13 @@ export default {
           this.$store.commit("socketConnect", token);
           this.$router.push({ name });
         })
-        .catch((err) =>
-          this.showSnackbar(err?.response?.data?.errorMessage)
-        )
+        .catch((err) => this.showSnackbar(err?.response?.data?.errorMessage))
         .finally(() => (this.isLoading = false));
     },
     sendResetCode() {
       //TODO implement
     },
   },
-  inject: ["showSnackbar"]
+  inject: ["showSnackbar"],
 };
 </script>
