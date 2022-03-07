@@ -4,9 +4,10 @@
       <label :for="`input-${_uid}`" v-if="label">{{ label }}</label>
     </div>
     <v-text-field
-      :value="value"
       outlined
       dense
+      :value="value"
+      :inputmode="inputmode ?? null"
       :readonly="readonly ?? false"
       :disabled="disabled ?? false"
       :filled="filled ?? false"
@@ -30,10 +31,11 @@ export default {
     "value",
     "type",
     "readonly",
+    "inputmode",
     "filled",
     "disabled",
     "showPassword",
-    "errorMessages"
+    "errorMessages",
   ],
   data() {
     return {
@@ -64,17 +66,17 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-label {
-  transition: color 0.3s, opacity 0.3s, font-size 0.3s, transform 0.3s;
-  transform-origin: 0 100%;
-  font-weight: 600;
-  font-size: 0.87rem;
-  opacity: 0.6;
-  display: inline-block;
-}
-
+<style lang="stylus">
 .labeled-text-field-container {
+  label {
+    transition: color 0.3s, opacity 0.3s, font-size 0.3s, transform 0.3s;
+    transform-origin: 0 100%;
+    font-weight: 600;
+    font-size: 0.87rem;
+    opacity: 0.6;
+    display: inline-block;
+  }
+
   &:focus-within {
     label {
       color: var(--v-primary-base);
