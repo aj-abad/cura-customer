@@ -23,8 +23,8 @@ export default {
       resizeObserver: null,
     };
   },
-  props:{
-    profilePhotoPreview: Object
+  props: {
+    profilePhotoPreview: Object,
   },
   computed: {
     url() {
@@ -55,17 +55,20 @@ export default {
   methods: {
     createResizeObserver() {
       this.resizeObserver = new ResizeObserver(() => {
-        const el = this.$refs.profilePhotoPreviewContainer
-        const {clientWidth: parentWidth} = this.$refs.profilePhotoPreviewContainer.parentElement
-        el.style.transform = `scale(${parentWidth / el.clientWidth})`
+        const el = this.$refs.profilePhotoPreviewContainer;
+        const { clientWidth: parentWidth } =
+          this.$refs.profilePhotoPreviewContainer.parentElement;
+        el.style.transform = `scale(${parentWidth / el.clientWidth})`;
       });
       this.resizeObserver.observe(this.$refs.profilePhotoPreviewContainer);
-      this.resizeObserver.observe(this.$refs.profilePhotoPreviewContainer.parentElement);
+      this.resizeObserver.observe(
+        this.$refs.profilePhotoPreviewContainer.parentElement
+      );
     },
   },
-  beforeDestroy(){
-    this.resizeObserver.disconnect()
-  }
+  beforeDestroy() {
+    this.resizeObserver.disconnect();
+  },
 };
 </script>
 
@@ -78,5 +81,17 @@ export default {
   border-radius: 10000px;
   top: 0;
   left: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius 100%
+    box-shadow: 8px 8px 100px inset rgba(0, 0, 0, 0.04), -8px -8px 100px inset rgba(0, 0, 0, 0.04), -8px 8px 100px inset rgba(0, 0, 0, 0.04), 8px -8px 100px inset rgba(0, 0, 0, 0.04);
+    z-index 1
+  }
 }
 </style>
