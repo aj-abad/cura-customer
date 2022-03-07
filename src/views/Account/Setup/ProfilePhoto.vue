@@ -71,10 +71,11 @@
           @click="openImageInput"
           aria-label="Edit profile photo"
           plain
-          class="pa-0 h-100 w-100 position-relative overflow-hidden"
+          class="rounded-pill pa-0 h-100 w-100 position-relative overflow-hidden"
           :style="`background: rgba(0,0,0, ${
             profilePhotoPreview ? 0.13 : 0.13
           })`"
+          
         >
           <v-icon
             :color="profilePhotoPreview.url ? 'white' : 'black'"
