@@ -27,7 +27,7 @@
     </div>
     <progress-indicator :steps="steps" :currentStep="currentStep" />
     <v-sheet
-      class="flex-grow-1 rounded-xl bottom-sheet position-relative"
+      class="flex-grow-1 rounded-lg bottom-sheet position-relative"
       style="overflow: hidden"
     >
       <transition :name="transition">
