@@ -72,7 +72,7 @@ export default {
     transition: color 0.3s, opacity 0.3s, font-size 0.3s, transform 0.3s;
     transform-origin: 0 100%;
     font-weight: 600;
-    font-size: 0.87rem;
+    font-size: 0.8125rem;
     opacity: 0.6;
     display: inline-block;
   }
