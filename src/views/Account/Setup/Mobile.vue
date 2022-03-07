@@ -29,7 +29,7 @@
       <p>
         <small>
           We'll use your mobile number for two-factor authentication (2FA) and
-          to contact you during bookings.
+          to allow our specialists to contact you.
         </small>
       </p>
       <button type="submit" class="d-none"></button>
