@@ -1,5 +1,5 @@
 <template>
-  <v-btn @click="goBack()" plain>
+  <v-btn @click="goBack()" plain rounded>
     <v-icon small>mdi-chevron-left</v-icon> Back
   </v-btn>
 </template>
