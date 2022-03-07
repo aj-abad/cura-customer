@@ -58,6 +58,38 @@
         </v-btn>
       </v-sheet>
     </v-dialog>
+    <v-bottom-sheet v-model="profilePhotoMenu">
+      <v-sheet class="rounded-lg bottom-sheet overflow-hidden">
+        <v-list dense>
+          <v-list-item
+            @click="openImageInput()"
+            class="d-flex align-center"
+            v-ripple="{ class: 'primary--text' }"
+          >
+            <v-list-item-icon>
+              <v-icon color="primary">mdi-camera</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title> Change profile photo </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            class="d-flex align-center"
+            v-ripple="{ class: 'error--text' }"
+            @click="removeProfilePhoto()"
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-delete</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="error--text">
+                Remove profile photo
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-sheet>
+    </v-bottom-sheet>
     <div>
       <small class="ml-auto font-weight-semibold grey--text text--darken-2">
         Step {{ currentStep }} of {{ steps }}
@@ -68,14 +100,20 @@
       <div class="h-100 w-100 position-relative">
         <profile-photo-preview :profilePhotoPreview="profilePhotoPreview" />
         <v-btn
-          @click="openImageInput"
+          @click="profilePhotoClickHandler()"
           aria-label="Edit profile photo"
           plain
-          class="rounded-pill pa-0 h-100 w-100 position-relative overflow-hidden"
+          class="
+            rounded-pill
+            pa-0
+            h-100
+            w-100
+            position-relative
+            overflow-hidden
+          "
           :style="`background: rgba(0,0,0, ${
             profilePhotoPreview ? 0.13 : 0.13
           })`"
-          
         >
           <v-icon
             :color="profilePhotoPreview.url ? 'white' : 'black'"
@@ -96,7 +134,13 @@
       />
     </div>
     <div class="mt-auto mb-2">
-      <v-btn plain elevation="0" large block @click="profilePhotoPreview.url ? openSkipDialog() : skipStep()">
+      <v-btn
+        plain
+        elevation="0"
+        large
+        block
+        @click="profilePhotoPreview.url ? openSkipDialog() : skipStep()"
+      >
         Maybe later
       </v-btn>
     </div>
@@ -122,6 +166,7 @@ export default {
       imageURL: null,
       dialog: false,
       confirmDialog: false,
+      profilePhotoMenu: false,
       animating: false,
       croppie: null,
     };
@@ -138,18 +183,28 @@ export default {
     openSkipDialog() {
       this.confirmDialog = true;
     },
+    profilePhotoClickHandler() {
+      return this.imageURL
+        ? (this.profilePhotoMenu = true)
+        : this.openImageInput();
+    },
     skipStep() {
       const nextStep = this.$router.options.routes
         .find((route) => route.name === "AccountSetup")
         .children.find((route) => route.meta.step === this.currentStep + 1);
-
+      this.removeProfilePhoto();
+      this.$router.push(nextStep);
+    },
+    removeProfilePhoto() {
+      this.profilePhotoMenu = false
+      this.imageURL = null;
+      this.profilePhotoPreview.url = null;
       URL.revokeObjectURL(this.imageURL);
       URL.revokeObjectURL(this.profilePhotoPreview.url);
       Object.assign(this.userInfo.profilePhoto, {
         url: null,
         bounds: null,
       });
-      this.$router.push(nextStep);
     },
     openImageInput() {
       this.$refs.imgInput.click();
@@ -173,6 +228,7 @@ export default {
         URL.revokeObjectURL(this.imageURL);
     },
     openCroppie() {
+      this.profilePhotoMenu = false;
       this.destroyCroppie();
       URL.revokeObjectURL(this.imageURL);
       this.imageURL = URL.createObjectURL(this.imgFile);
@@ -218,8 +274,9 @@ export default {
     },
   },
   beforeRouteLeave(to, from, next) {
-    if (this.dialog) {
+    if (this.dialog || this.profilePhotoMenu) {
       this.dialog = false;
+      this.profilePhotoMenu = false;
       return next(false);
     }
     return next(true);
