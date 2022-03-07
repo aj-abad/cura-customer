@@ -1,0 +1,16 @@
+@mixin transition-overlay
+  &:before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    width: 100vw
+    height: 100vh
+    background: rgba(33, 33, 33, 0.46)
+    transition: opacity 0.3s
+    will-change: opacity
+    opacity: 0
+    z-index: 1
+@mixin transition-overlay-darken
+  &:before
+    opacity: 1 !important
