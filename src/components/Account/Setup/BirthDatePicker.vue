@@ -12,7 +12,7 @@
       v-model="date"
       color="primary"
     />
-    <div class="pa-4 white">
+    <div class="pa-4 pb-6 white">
       <v-btn
         block
         large
