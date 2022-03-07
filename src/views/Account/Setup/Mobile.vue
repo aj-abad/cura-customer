@@ -10,22 +10,24 @@
       <h2>Mobile number</h2>
     </div>
     <form @submit.prevent="$emit('forward')">
-      <v-text-field
-        class="mb-4"
-        dense
-        rounded
-        outlined
-        :errorMessages="mobileErrorMessages"
-        hide-details="auto"
-        label="Mobile number"
-        v-model="mobile"
-        prefix="+63"
-        inputmode="numeric"
-        v-mask="'### ### ####'"
-        v-focus="320"
-        :readonly="!!userInfo.mobile"
-        :append-icon="!!userInfo.mobile ? 'mdi-check' : null"
-      />
+      <div class="labeled-text-field-container mb-4">
+        <div style="height: 24px">
+          <label for="mobile-input">Mobile number</label>
+        </div>
+        <v-text-field
+          dense
+          outlined
+          :errorMessages="mobileErrorMessages"
+          hide-details="auto"
+          v-model="mobile"
+          prefix="+63"
+          inputmode="numeric"
+          v-mask="'### ### ####'"
+          v-focus="320"
+          :readonly="!!userInfo.mobile"
+          :append-icon="!!userInfo.mobile ? 'mdi-check' : null"
+        />
+      </div>
       <p>
         <small>
           We'll use your mobile number for two-factor authentication (2FA) and
