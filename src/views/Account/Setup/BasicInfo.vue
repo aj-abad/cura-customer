@@ -10,29 +10,27 @@
       <h2>Basic information</h2>
     </div>
     <form @submit.prevent="$emit('forward')">
-      <v-text-field
-        dense
-        rounded
-        outlined
-        label="First name"
-        hide-details="auto"
-        :error-messages="nameErrorMessage(userInfo.firstName)"
-        class="mb-4"
+      <v-labeled-text-field
         v-model="userInfo.firstName"
-        id="first-name-input"
+        label="First name"
         v-focus="320"
+        :error-messages="nameErrorMessage(userInfo.firstName)"
+        class="mb-2"
       />
-      <v-text-field
-        dense
-        rounded
-        outlined
+
+      <v-labeled-text-field
+        v-model="userInfo.lastName"
         label="Last name"
         :error-messages="nameErrorMessage(userInfo.lastName)"
-        hide-details="auto"
-        v-model="userInfo.lastName"
-        class="mb-4"
+        class="mb-2"
       />
-      <v-text-field
+      <v-labeled-text-field
+        v-model="formattedDate"
+        label="Birth date"
+        class="mb-2"
+        @focus="showDialog()"
+      />
+      <!-- <v-text-field
         readonly
         dense
         rounded
@@ -40,7 +38,7 @@
         label="Birth date"
         v-model="formattedDate"
         @focus.prevent="showDialog()"
-      />
+      /> -->
       <button type="submit" class="d-none"></button>
     </form>
   </div>
